@@ -1,0 +1,42 @@
+backed
+1. User Authentication Flow :
+
+ userRegister :- /user/register
+ userLogin ;- /user/login{
+ 1  jwt:- create a jwt tokens for the users , and error respnose
+ 2 backend validation  :- zod
+
+ }
+
+models :- {
+    userAuth ,
+    userChat :-{
+        sender,
+        content,
+        chatId,
+        timesataps
+    }
+}
+
+middlewere;-{
+    check jwt tokens
+}
+
+
+2.  Chat Room Connection Flow:
+/user/chat
+sender :- mongooe.tyoe.objectId,
+content :- req.user
+chatId:- socketId
+
+
+sockets :-{
+    frontend and backend
+}
+flow diagram :-
+[User] -> [Frontend] -> [Backend API] -> [Database]
+ |         |               |                |
+Register/Login   JWT Token |  Auth/Chat Logic | Store Users/Messages
+
+       |
+[Socket.io Client] <-> [Socket.io Server] <-> [Broadcast Messages]

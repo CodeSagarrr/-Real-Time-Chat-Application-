@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
 import mongoConnect from './db/MongoDB.js';
 import path from 'path';
-import { handleRegister, handleLogin, sendMessage } from './Controller/controller.js'
+import { handleRegister, handleLogin, sendMessage } from './Controller/userController.js'
 import { validateSchema, loginValidation } from './Validations/registerValidation.js'
 import checkUserToken from './Middelwere/checkUserToken.js'
 import validateUser from './Middelwere/checkValidation.js'

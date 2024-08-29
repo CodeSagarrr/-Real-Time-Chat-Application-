@@ -10,11 +10,13 @@ import { validateSchema, loginValidation } from './Validations/registerValidatio
 import checkUserToken from './Middelwere/checkUserToken.js'
 import validateUser from './Middelwere/checkValidation.js'
 
+// server
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+// config dependency
 app.use(bodyParser.json());
 app.use(express.json());
 mongoConnect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/chatDataBase');
@@ -25,7 +27,7 @@ app.get('/user', (req, res) => {
     res.sendFile("/public/index.html");
 })
 
-
+// routes
 app.route('/user/register').post(validateUser(validateSchema), handleRegister);
 app.route('/user/login').post(validateUser(loginValidation), handleLogin);
 app.route('/user/chat').post(checkUserToken, sendMessage);

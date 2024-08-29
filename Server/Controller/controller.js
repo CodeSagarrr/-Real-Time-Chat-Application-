@@ -1,4 +1,5 @@
 import userModel from '../Model/authSchema.js';
+import chatModel from '../Model/chatSchema.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 
@@ -39,3 +40,18 @@ export async function handleLogin(req, res) {
     }
 }
 
+
+export const sendMessage = async(req,res) =>{
+    const {message , receiver} = req.body;
+    console.log(message,receiver);
+    try {
+        const Message = await chatModel.create({
+            message,
+            sender: req.user.username,
+            receiver
+        })
+        res.status(200).json({msg:Message.message});
+    } catch (error) {
+        console.log(error);
+    }
+};

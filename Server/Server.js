@@ -23,8 +23,17 @@ mongoConnect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/chatDataBase');
 
 // html connetion
 app.use(express.static(path.resolve('./public')))
-app.get('/user', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile("/public/index.html");
+})
+
+app.get('/user',(req,res)=>{
+    res.json({
+        name:'sagar',
+        age:18,
+        email:'sagar@gmail.com',
+        password:'sagar123'
+    })
 })
 
 // routes

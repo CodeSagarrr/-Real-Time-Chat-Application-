@@ -33,9 +33,8 @@ export async function handleLogin(req, res) {
             res.status(404).json({msg:'Password incorrect'});
         }else{
             const token = jwt.sign({username,password},process.env.SECRETE_KEY_JWT , {expiresIn:'15days'})
-            // res.status(200).json({msg:'User are login successfully',token});
-            res.cookie('JWT-TOKEN',token);
-            res.status(200).json({msg:'User is login'});
+            res.cookie('jwt',token);
+            res.status(200).json({msg:'User are login'});
         }
     }
 }

@@ -5,7 +5,7 @@ import bodyParser  from 'body-parser';
 import { Server } from 'socket.io';
 import mongoConnect  from './db/MongoDB.js';
 import {handleRegister , handleLogin} from './Controller/controller.js'
-import {validateSchema} from './Validations/registerValidation.js'
+import {validateSchema , loginValidation} from './Validations/registerValidation.js'
 import validateUser from './Middelwere/checkValidation.js'
 
 dotenv.config();
@@ -22,7 +22,7 @@ app.get('/',(req,res)=>{
     res.send('Server is running');
 })
 app.route('/user/register').post(validateUser(validateSchema),handleRegister);
-app.route('/user/login').post(handleLogin);
+app.route('/user/login').post(validateUser(loginValidation),handleLogin);
 
 
 

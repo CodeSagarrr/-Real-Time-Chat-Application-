@@ -27,14 +27,7 @@ app.get('/', (req, res) => {
     res.sendFile("/public/index.html");
 })
 
-app.get('/user',(req,res)=>{
-    res.json({
-        name:'sagar',
-        age:18,
-        email:'sagar@gmail.com',
-        password:'sagar123'
-    })
-})
+
 
 // routes
 app.route('/user/register').post(validateUser(validateSchema), handleRegister);

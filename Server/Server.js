@@ -4,7 +4,9 @@ import http from 'http';
 import bodyParser  from 'body-parser';
 import { Server } from 'socket.io';
 import mongoConnect  from './db/MongoDB.js';
-import handleRegister from './Controller/controller.js'
+import {handleRegister , handleLogin} from './Controller/controller.js'
+import {validateSchema} from './Validations/registerValidation.js'
+import validateUser from './Middelwere/checkValidation.js'
 
 dotenv.config();
 const app = express();
@@ -19,7 +21,8 @@ mongoConnect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/chatDataBase');
 app.get('/',(req,res)=>{
     res.send('Server is running');
 })
-app.route('/user/register').post(handleRegister);
+app.route('/user/register').post(validateUser(validateSchema),handleRegister);
+app.route('/user/login').post(handleLogin);
 
 
 

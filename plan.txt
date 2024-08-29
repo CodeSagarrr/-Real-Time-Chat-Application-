@@ -36,7 +36,7 @@ sockets :-{
 flow diagram :-
 [User] -> [Frontend] -> [Backend API] -> [Database]
  |         |               |                |
-Register/Login   JWT Token |  Auth/Chat Logic | Store Users/Messages
+Register/Login   JWT Token |  Auth/Chat Logic | Store Users/Messages | user profile
 
        |
 [Socket.io Client] <-> [Socket.io Server] <-> [Broadcast Messages]

@@ -1,11 +1,13 @@
 const validateUser = (schema) => async (req, res, next) => {
     try {
         const parseBody = await schema.parseAsync(req.body);
+        console.log(req.body);
         req.body = parseBody;
         next();
-    } catch (error) {
-        const errMsg = error.errors[0].message;
-        res.status(400).json({msg:errMsg});
+    } catch(err) {
+        const errMsg = err.errors[0].message;
+        console.log(errMsg);
+        res.json({msg:errMsg});
     }
 
 }

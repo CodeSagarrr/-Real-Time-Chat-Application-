@@ -17,7 +17,7 @@ export async function handleRegister(req, res) {
         await user.save();
         res.status(200).json({ msg: 'user successfully registered' });
     } catch (error) {
-        console.log(error.message);
+        console.log('user not register',error);
     }
 
 };

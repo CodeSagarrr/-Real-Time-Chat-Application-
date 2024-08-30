@@ -1,0 +1,9 @@
+#root {
+    width: 100vw;
+    height: 100vh;
+    background: #111112;
+}
+
+.Gradient{
+    background-image: linear-gradient(to right top, #1a1a1d, #161616, #1b1b1b, #2f2f2f, #434343);
+}

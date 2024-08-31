@@ -6,7 +6,6 @@ const validateUser = (schema) => async (req, res, next) => {
         next();
     } catch(err) {
         const errMsg = err.errors[0].message;
-        console.log(errMsg);
         res.json({msg:errMsg});
     }
 

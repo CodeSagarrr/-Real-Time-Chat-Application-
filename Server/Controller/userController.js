@@ -29,9 +29,9 @@ export async function handleLogin(req, res) {
     if(!user){
         res.status(404).json({msg:'User not found'});
     }else{
-        const passMatch = await bcrypt.compare(password , user.password);
+        const passMatch = await bcrypt.compare( password , user.password );
         if(!passMatch){
-            res.status(404).json({msg:'Password incorrect'});
+            res.json({msg:'Password incorrect'});
         }else{
             const token = jwt.sign({username,password},process.env.SECRETE_KEY_JWT , {expiresIn:'15days'})
             res.cookie('jwt',token);
@@ -40,6 +40,14 @@ export async function handleLogin(req, res) {
     }
 }
 
+export const handleLogout = (req,res) =>{
+    const clearToken = req.cookies.jwt;
+
+    if(clearToken){
+     res.clearCookie('jwt').send({msg:'user are logout'});
+    }
+ }
+ 
 
 export const sendMessage = async(req,res) =>{
     const {message , receiver} = req.body;
@@ -55,3 +63,4 @@ export const sendMessage = async(req,res) =>{
         console.log(error);
     }
 };
+

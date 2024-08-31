@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import axios, { Axios } from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+import { ToastContainer, toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate} from 'react-router-dom'
 import { FaUserLock } from "react-icons/fa";
 function Register() {
+  const navigate = useNavigate();
   const [userData , setUserData] = useState({username:'',email:'',password:''});
 
   const handleChange = (e)=>{
@@ -20,7 +21,7 @@ function Register() {
         toast.success(res.data.msg);
         setUserData({username:'',email:'',password:''});
         setTimeout(()=>{
-          window.location.href='/login'
+          navigate('/login');
         },3000)
        }else{
         toast.error(res.data.msg);

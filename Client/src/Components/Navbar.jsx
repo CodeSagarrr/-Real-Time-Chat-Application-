@@ -1,7 +1,24 @@
+import axios from 'axios'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
+import {  toast  } from 'react-toastify';
 
 const Navbar = () => {
+const navigate = useNavigate();
+
+const handleLogout = async() =>{
+    try {
+      const res = await axios.get('/user/logout');
+      toast.success(res.data.msg);
+      setTimeout(()=>{
+        navigate('/login'); 
+      },3000)
+           
+    } catch (error) {
+      toast.error(error)
+    }
+          
+  }
   return (
     <>
       <div className='flex '>
@@ -12,10 +29,11 @@ const Navbar = () => {
           <ul className='flex justify-end'>
 
             <Link to="/register"><li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer'>Sign up</li></Link>
-                <li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer'>Logout</li>
+                <li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer' onClick={handleLogout}>Logout</li>
           </ul>
         </div>
       </div>
+      
     </>
   )
 }

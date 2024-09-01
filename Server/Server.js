@@ -10,6 +10,7 @@ import { validateSchema, loginValidation } from './Validations/registerValidatio
 import checkUserToken from './Middelwere/checkUserToken.js'
 import validateUser from './Middelwere/checkValidation.js'
 import cookieParser from 'cookie-parser';
+import cors from 'cors'
 
 // server
 dotenv.config();
@@ -21,6 +22,7 @@ const io = new Server(server);
 app.use(bodyParser.json());
 app.use(cookieParser())
 app.use(express.json());
+app.use(cors());
 mongoConnect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/chatDataBase');
 
 // html connetion
@@ -35,12 +37,14 @@ app.get('/', (req, res) => {
 app.route('/user/register').post(validateUser(validateSchema), handleRegister);
 app.route('/user/login').post(validateUser(loginValidation), handleLogin);
 app.route('/user/logout').get(handleLogout)
-app.route('/user/chat').post(checkUserToken, sendMessage);
-
+app.route('/user/chat').post( sendMessage);
+app.get('/user/chat',checkUserToken,(req,res)=>{
+  res.json({ user: req.user, message: "Access granted to chat data" });
+})
 
 // socket connections
 io.on('connection',(socket)=>{
-    console.log('Web-Socket connection established');
+    console.log('Web-Socket connection established',socket.id);
  
     socket.on('join',(reciever)=>{
         socket.join(reciever);

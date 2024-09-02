@@ -25,19 +25,19 @@ app.use(express.json());
 app.use(cors());
 mongoConnect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/chatDataBase');
 
-<<<<<<< HEAD
+
 // html connetion
 // app.use(express.static(path.resolve('./public')))
 // app.get('/', (req, res) => {
 //     res.sendFile("/public/index.html");
 // })
-=======
+
 // EJS connetion
 app.use(express.static(path.resolve('./public')))
 app.get('/', (req, res) => {
     res.sendFile("/public/index.html");
 })
->>>>>>> 17be04514cd44fc4c4f18cc1f390aadd5e6eb675
+
 
 
 

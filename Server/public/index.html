@@ -13,19 +13,19 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        // const socket = io();
-        // const inp = document.getElementById("inp");
-        // const btn = document.getElementById("btn");
+        const socket = io();
+        const inp = document.getElementById("inp");
+        const btn = document.getElementById("btn");
 
-        // btn.addEventListener("click",(e)=>{
-        //     const inpVal = inp.value;
-        //     socket.emit("send",inpVal);
-        //     inp.value = "";
-        // })
+        btn.addEventListener("click",(e)=>{
+            const inpVal = inp.value;
+            socket.emit("send",inpVal);
+            inp.value = "";
+        })
 
-        // socket.on("recieve",(massege)=>{
-        //     document.body.innerHTML += `<p>${massege}</p>`;
-        // })
+        socket.on("recieve",(massege)=>{
+            document.body.innerHTML += `<p>${massege}</p>`;
+        })
     </script>
 </body>
 </html>

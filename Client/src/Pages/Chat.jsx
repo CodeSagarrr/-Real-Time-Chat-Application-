@@ -27,13 +27,17 @@ const Chat = () => {
     // socket connection
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
-    const ENDPOINT = 'http://localhost:8080';
+    const ENDPOINT = 'http://localhost:8080/user/chat';
     const socket = socketIO(ENDPOINT , {transports:['websocket']})
 
     useEffect(() => {
-        socket.on('connect', (message) => {
+        socket.on('connect', () => {
             setMessages((prevMessages) => [...prevMessages, message])
         });
+
+        socket.emit('join',(socket)=>{
+            console.log('User connected:', socket.id);
+        })
 
         return () => {
             socket.off('message');
@@ -46,9 +50,9 @@ const Chat = () => {
         try {
             await axios.post(
                 'http://localhost:8080/user/chat',
-                { content: message, chatId: '' }
+                {message : message, receiver: 'oL7oHqL5IZuUuKLiAABo' }
             );
-            socket.emit('message', { chatId: 'your-chat-id', message });
+            socket.emit('message', { receiver: 'oL7oHqL5IZuUuKLiAABo', message });
             setMessage('');
         } catch (error) {
             console.error('Message send error:', error);

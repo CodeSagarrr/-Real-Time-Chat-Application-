@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Chat from './Pages/Chat';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
+import socketIO from 'socket.io-client';
+
+const ENDPOINT = 'http://localhost:8080/'
+const socket = socketIO(ENDPOINT , {transports:['websocket']})
 function App() {
 
   return (

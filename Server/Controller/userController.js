@@ -59,7 +59,7 @@ export const sendMessage = async(req,res) =>{
     try {
         const Message = await chatModel.create({
             message,
-            sender: req.user.username,
+            sender:req.user.username,
             receiver
         })
         res.status(200).json({msg:Message.message});

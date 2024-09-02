@@ -45,25 +45,13 @@ app.get('/', (req, res) => {
 app.route('/user/register').post(validateUser(validateSchema), handleRegister);
 app.route('/user/login').post(validateUser(loginValidation), handleLogin);
 app.route('/user/logout').get(handleLogout)
-app.route('/user/chat').post( sendMessage);
+app.route('/user/chat').post(checkUserToken, sendMessage);
 app.get('/user/chat',checkUserToken,(req,res)=>{
   res.json({ user: req.user, message: "Access granted to chat data" });
 })
 
 // socket connections
-io.on('connection',(socket)=>{
-    console.log('Web-Socket connection established');
- 
-    socket.on('join',(reciever)=>{
-        socket.join(reciever);
-    });
-    socket.on('message',({reciever , message})=>{
-        io.to(reciever).emit('message',message);
-    });
-    socket.on('disconnect',()=>{
-        console.log('User disconnected');
-     });
- })
+
 
 // server listen
 const port = process.env.PORT || 8000;

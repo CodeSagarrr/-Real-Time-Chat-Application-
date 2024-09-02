@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React from 'react'
 import { Link , useNavigate } from 'react-router-dom'
-import {  toast  } from 'react-toastify';
+import {  ToastContainer,toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
 const navigate = useNavigate();
@@ -11,9 +12,8 @@ const handleLogout = async() =>{
       const res = await axios.get('/user/logout');
       toast.success(res.data.msg);
       setTimeout(()=>{
-        navigate('/login'); 
-      },3000)
-           
+        navigate('/login');
+      },3000)  
     } catch (error) {
       toast.error(error)
     }
@@ -21,6 +21,7 @@ const handleLogout = async() =>{
   }
   return (
     <>
+    <ToastContainer/>
       <div className='flex '>
         <div className='ml-10 mt-4 basis-[40%]'>
           <h1 className='text-3xl font-bold text-[#ffff]'>Chat-App</h1>

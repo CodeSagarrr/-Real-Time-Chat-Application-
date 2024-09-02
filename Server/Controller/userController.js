@@ -3,6 +3,7 @@ import chatModel from '../Model/chatSchema.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 
+// registration routes
 export async function handleRegister(req, res) {
     const { username, email, password } = req.body;
     console.log(username, email, password);
@@ -22,6 +23,7 @@ export async function handleRegister(req, res) {
 
 };
 
+// login routes
 export async function handleLogin(req, res) {
     const { username, password } = req.body;
     console.log(username, password);
@@ -40,6 +42,8 @@ export async function handleLogin(req, res) {
     }
 }
 
+
+// logout routes
 export const handleLogout = (req,res) =>{
     const clearToken = req.cookies.jwt;
 
@@ -48,7 +52,7 @@ export const handleLogout = (req,res) =>{
     }
  }
  
-
+// message routes
 export const sendMessage = async(req,res) =>{
     const {message , receiver} = req.body;
     console.log(message,receiver);

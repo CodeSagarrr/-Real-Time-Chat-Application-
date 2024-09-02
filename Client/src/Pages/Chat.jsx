@@ -3,11 +3,10 @@ import Navbar from '../Components/Navbar'
 import { IoIosSend } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import io from 'socket.io-client'
+import socketIO from 'socket.io-client'
 const Chat = () => {
     const redirect = useNavigate();
     const [user, setUser] = useState('');
-    const socket = io('http://localhost:8080/user/chat');
     const getData = async () => {
         try {
             const response = await axios.get('/user/chat');
@@ -28,9 +27,11 @@ const Chat = () => {
     // socket connection
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const ENDPOINT = 'http://localhost:8080';
+    const socket = socketIO(ENDPOINT , {transports:['websocket']})
 
     useEffect(() => {
-        socket.on('message', (message) => {
+        socket.on('connect', (message) => {
             setMessages((prevMessages) => [...prevMessages, message])
         });
 

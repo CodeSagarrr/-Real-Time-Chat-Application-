@@ -26,10 +26,10 @@ app.use(cors());
 mongoConnect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/chatDataBase');
 
 // html connetion
-app.use(express.static(path.resolve('./public')))
-app.get('/', (req, res) => {
-    res.sendFile("/public/index.html");
-})
+// app.use(express.static(path.resolve('./public')))
+// app.get('/', (req, res) => {
+//     res.sendFile("/public/index.html");
+// })
 
 
 
@@ -44,7 +44,7 @@ app.get('/user/chat',checkUserToken,(req,res)=>{
 
 // socket connections
 io.on('connection',(socket)=>{
-    console.log('Web-Socket connection established',socket.id);
+    console.log('Web-Socket connection established');
  
     socket.on('join',(reciever)=>{
         socket.join(reciever);
@@ -59,4 +59,4 @@ io.on('connection',(socket)=>{
 
 
 const port = process.env.PORT || 8000;
-server.listen(port, () => console.log(`server listening on ${port} `))
+server.listen(port, () => console.log(`server listening on http://localhost:${port} `))

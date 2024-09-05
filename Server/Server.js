@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
 import mongoConnect from './db/MongoDB.js';
 import path from 'path';
-import { handleRegister, handleLogin, sendMessage , handleLogout } from './Controller/userController.js';
+import { handleRegister, handleLogin , handleLogout , newConversation ,getUserConversation ,getChatUser} from './Controller/userController.js';
 import { validateSchema, loginValidation } from './Validations/registerValidation.js';
 import checkUserToken from './Middelwere/checkUserToken.js';
 import validateUser from './Middelwere/checkValidation.js';
@@ -45,13 +45,18 @@ app.get('/', (req, res) => {
 app.route('/user/register').post(validateUser(validateSchema), handleRegister);
 app.route('/user/login').post(validateUser(loginValidation), handleLogin);
 app.route('/user/logout').get(handleLogout)
-app.route('/user/chat').post(checkUserToken, sendMessage);
+app.route('/user/conversation').post(newConversation)
+app.route('/user/conversation/:userId').get(getUserConversation)
+app.route('/user/chatuser').post(checkUserToken, getChatUser);
 app.get('/user/chat',checkUserToken,(req,res)=>{
   res.json({ user: req.user, message: "Access granted to chat data" });
 })
 
 // socket connections
-
+io.on('connection',(socket)=>{
+  
+   
+})
 
 // server listen
 const port = process.env.PORT || 8000;

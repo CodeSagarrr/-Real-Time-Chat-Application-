@@ -22,7 +22,7 @@ const handleLogout = async() =>{
   return (
     <>
     <ToastContainer/>
-      <div className='flex '>
+      <div className='flex w-full'>
         <div className='ml-10 mt-4 basis-[40%]'>
           <h1 className='text-3xl font-bold text-[#ffff]'>Chat-App</h1>
         </div>

@@ -23,7 +23,6 @@ function Login() {
         setTimeout(()=>{
           navigate('/');
         },3000);
-       
       }else{
         toast.error(res.data.msg);   
       }

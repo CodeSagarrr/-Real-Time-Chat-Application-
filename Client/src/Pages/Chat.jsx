@@ -3,30 +3,54 @@ import Navbar from '../Components/Navbar'
 import { IoIosSend } from "react-icons/io";
 import axios from 'axios';
 import socketIO from 'socket.io-client'
-const Chat = ({getData}) => {
-
+import Conversation from '../Pages/Conversion'
+import { useParams } from 'react-router-dom';
+const Chat = ({ getData, user }) => {
+   let userId = '66d0861e352dd62ede2a91a0'
     useEffect(() => {
         getData();
     }, [])
-    // socket connection
-    
-    const ENDPOINT = 'http://localhost:8080/user/chat';
-    
-  
-   
+
+    useEffect(() => {
+        const conversation = async () => {
+            try {
+                const response = await axios.get(`/user/conversation/`+userId);
+                console.log(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        conversation();
+    }, [])
+
 
     return (
         <>
             <div className='flex'>
-                <div className='w-[20%] h-[100vh] bg-[#242424] rounded-r-sm'></div>
-                <form className='w-full mx-6 my-4  '>
-                    <div className="chat-window">
-                        <h1>Chat</h1>
+                <div className='w-[22%] h-[100vh] bg-[#242424] rounded-r-sm pt-6'>
+                    <div>
+                        <div className='ml-4 mr-2'>
+                            <input type="text" placeholder="Search friends ..." className="input input-bordered input-primary w-full max-w-xs" />
+                        </div>
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
                     </div>
+                </div>
+                <div className='w-full flex flex-col'>
                     <Navbar />
-                    <input type="text" name='text' placeholder="Enter Message" className='w-[60%] p-3 rounded-lg absolute bottom-0 ml-40 mb-8 outline-none text-semibold' />
-                    <IoIosSend className=' text-[#fff] absolute bottom-0 right-[11%] text-4xl mb-10 cursor-pointer'/>
-                </form>
+                    <div className=''>
+                    </div>
+                    <div className=' w-[90%] mt-10 ml-10 mr-10'>
+                        <input
+                            type="text"
+                            placeholder="Type here ..."
+                            className="input input-bordered input-primary w-[40vw] max-w-[50rem] absolute bottom-0 mb-12 translate-x-[40%]" />
+                        <button className="btn absolute bottom-0 right-96 mb-12" ><IoIosSend className='text-3xl text-white' /></button>
+                    </div>
+                </div>
             </div>
         </>
     )

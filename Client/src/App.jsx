@@ -11,6 +11,7 @@ const ENDPOINT = 'http://localhost:8080/'
 const socket = socketIO(ENDPOINT , {transports:['websocket']})
 function App() {
   const [user, setUser] = useState('');
+
   const getData = async () => {
       try {
           const response = await axios.get('/user/chat');
@@ -30,7 +31,7 @@ function App() {
     <>
     <Router>
         <Routes>
-          <Route exact path="/" element={<Chat getData={getData}/>} />
+          <Route exact path="/" element={<Chat getData={getData} user={user}/>} />
           <Route exact path="/register" element={<Register/>} />
           <Route exact path="/login" element={<Login/>} />
         </Routes>

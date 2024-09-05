@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 
 const chatSchema = mongoose.Schema({
@@ -6,7 +7,7 @@ const chatSchema = mongoose.Schema({
         ref: 'userModel',
         required: true,
     },
-    message:{
+    text:{
         type: String,
         required: true,
     },

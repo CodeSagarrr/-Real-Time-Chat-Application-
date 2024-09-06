@@ -6,7 +6,8 @@ import socketIO from 'socket.io-client'
 import Conversation from '../Pages/Conversion'
 import { useParams } from 'react-router-dom';
 const Chat = ({ getData, user }) => {
-   let userId = '66d0861e352dd62ede2a91a0'
+    let userId = '66d0861e352dd62ede2a91a0'
+    const [conversation, setConversation] = useState([])
     useEffect(() => {
         getData();
     }, [])
@@ -14,8 +15,8 @@ const Chat = ({ getData, user }) => {
     useEffect(() => {
         const conversation = async () => {
             try {
-                const response = await axios.get(`/user/conversation/`+userId);
-                console.log(response.data)
+                const response = await axios.get(`/user/conversation/` + userId);
+                setConversation(response.data)
             } catch (error) {
                 console.log(error)
             }
@@ -32,16 +33,21 @@ const Chat = ({ getData, user }) => {
                         <div className='ml-4 mr-2'>
                             <input type="text" placeholder="Search friends ..." className="input input-bordered input-primary w-full max-w-xs" />
                         </div>
-                        <Conversation />
-                        <Conversation />
-                        <Conversation />
-                        <Conversation />
-                        <Conversation />
+                        {
+                            conversation.map((c) => (
+                                <Conversation conversation={c} />
+                            ))
+                        };
+
                     </div>
                 </div>
+
                 <div className='w-full flex flex-col'>
                     <Navbar />
                     <div className=''>
+                        <div className="chat chat-end">
+                            <div className="chat-bubble chat-bubble-info">Calm down, Anakin.</div>
+                        </div>
                     </div>
                     <div className=' w-[90%] mt-10 ml-10 mr-10'>
                         <input

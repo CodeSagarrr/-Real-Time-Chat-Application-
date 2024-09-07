@@ -11,7 +11,7 @@ const chatSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    receiver:{
+    chatId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModel',
         required: true,
@@ -20,7 +20,6 @@ const chatSchema = mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
-
 });
 
 const chatModel = mongoose.model('chatModel', chatSchema);

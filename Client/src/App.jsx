@@ -4,7 +4,7 @@ import Chat from './Pages/Chat';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
 import socketIO from 'socket.io-client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const ENDPOINT = 'http://localhost:8080/'
@@ -26,7 +26,6 @@ function App() {
           }
       }
   }
-
   return (
     <>
     <Router>

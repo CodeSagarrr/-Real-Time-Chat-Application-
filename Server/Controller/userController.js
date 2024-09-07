@@ -38,7 +38,7 @@ export async function handleLogin(req, res) {
         } else {
             const token = jwt.sign({ username, password }, process.env.SECRETE_KEY_JWT, { expiresIn: '15days' })
             res.cookie('jwt', token);
-            res.status(200).json({ msg: 'User are login',username:username });
+            res.status(200).json({ msg: 'User are login', username:username , password:password});
         }
     }
 }
@@ -53,21 +53,22 @@ export const handleLogout = (req, res) => {
     }
 }
 
-// message routes
-// export const sendMessage = async (req, res) => {
-//     const { message, receiver } = req.body;
-//     console.log(message, receiver);
-//     try {
-//         const Message = await chatModel.create({
-//             message,
-//             sender: req.user.username,
-//             receiver
-//         })
-//         res.status(200).json({ msg: Message.message });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
+// get user 
+export const getUser = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'Server error' });
+    }
+};
+
+
 
 // conersation of user
 export const newConversation = async(req,res)=>{
@@ -94,16 +95,28 @@ export const getUserConversation = async(req,res)=>{
 }
 
 // get chat user
-export const getChatUser = async(req,res)=>{
-    const {sender,text ,receiver} = req.body;
+export const addUserChat = async(req,res)=>{
+    const {sender,text ,chatId} = req.body;
     try {
         const chatuser = await chatModel.create({
             sender,
             text,
-            receiver
+            chatId
         });
         res.status(200).json(chatuser);
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
 }
+
+// get chat user 
+
+export const getUserChat = async(req,res)=>{
+    const {chatId} = req.params;
+    try {
+        const findChat = await chatModel.find({chatId});
+        res.status(200).json(findChat);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+};

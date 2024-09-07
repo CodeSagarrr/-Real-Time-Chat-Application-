@@ -4,7 +4,6 @@ import { IoIosSend } from "react-icons/io";
 import axios from 'axios';
 import socketIO from 'socket.io-client'
 import Conversation from '../Pages/Conversion'
-import { useParams } from 'react-router-dom';
 const Chat = ({ getData, user }) => {
     let userId = '66d0861e352dd62ede2a91a0'
     const [conversation, setConversation] = useState([])
@@ -17,6 +16,7 @@ const Chat = ({ getData, user }) => {
             try {
                 const response = await axios.get(`/user/conversation/` + userId);
                 setConversation(response.data)
+                console.log(response.data)
             } catch (error) {
                 console.log(error)
             }
@@ -34,8 +34,8 @@ const Chat = ({ getData, user }) => {
                             <input type="text" placeholder="Search friends ..." className="input input-bordered input-primary w-full max-w-xs" />
                         </div>
                         {
-                            conversation.map((c) => (
-                                <Conversation conversation={c} />
+                            conversation.map((c,i) => (
+                                <Conversation key={i} conversation={c} currentUser={userId}/>
                             ))
                         };
 

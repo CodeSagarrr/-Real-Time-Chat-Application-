@@ -19,6 +19,7 @@ function Register() {
        const res = await axios.post('/user/register', userData);
        if(res.data.msg ==='user successfully registered'){
         toast.success(res.data.msg);
+        console.log(res.data);
         setUserData({username:'',email:'',password:''});
         setTimeout(()=>{
           navigate('/login');

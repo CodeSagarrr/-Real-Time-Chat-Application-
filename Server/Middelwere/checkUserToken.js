@@ -7,7 +7,7 @@ const checkUserToken = async(req,res,next) =>{
 
     const user = jwt.verify(checkToken , process.env.SECRETE_KEY_JWT );
     if(!user){
-        return res.json({msg:'Token not verify'});
+        return res.json({msg:'Token not verify',otherDetails});
     }else{
         req.user = user;
         next();

@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
 import mongoConnect from './db/MongoDB.js';
 import path from 'path';
-import { handleRegister, handleLogin , handleLogout , newConversation ,getUserConversation ,addUserChat , getUserChat} from './Controller/userController.js';
+import { handleRegister, handleLogin , handleLogout ,getUser, newConversation ,getUserConversation ,addUserChat , getUserChat} from './Controller/userController.js';
 import { validateSchema, loginValidation } from './Validations/registerValidation.js';
 import checkUserToken from './Middelwere/checkUserToken.js';
 import validateUser from './Middelwere/checkValidation.js';
@@ -39,8 +39,9 @@ app.get('/', (req, res) => {
 app.route('/user/register').post(validateUser(validateSchema), handleRegister);
 app.route('/user/login').post(validateUser(loginValidation), handleLogin);
 app.route('/user/logout').get(handleLogout)
-app.route('/user/conversation').post(newConversation)
-app.route('/user/conversation/:userId').get(getUserConversation)
+app.route('/user/chat/:id').get(getUser);
+app.route('/user/conversation').post(newConversation);
+app.route('/user/conversation/:userId').get(getUserConversation);
 app.route('/user/chatuser').post(checkUserToken, addUserChat);
 app.route('/user/chatuser/:chatId').get(getUserChat);
 app.get('/user/chat',checkUserToken,(req,res)=>{

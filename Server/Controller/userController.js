@@ -36,9 +36,10 @@ export async function handleLogin(req, res) {
         if (!passMatch) {
             res.json({ msg: 'Password incorrect' });
         } else {
+            const { password, ...otherDetails } = user._doc;
             const token = jwt.sign({ username, password }, process.env.SECRETE_KEY_JWT, { expiresIn: '15days' })
             res.cookie('jwt', token);
-            res.status(200).json({ msg: 'User are login', username:username , password:password});
+            res.status(200).json({ msg: 'User are login',otherDetails });
         }
     }
 }
@@ -47,30 +48,31 @@ export async function handleLogin(req, res) {
 // logout routes
 export const handleLogout = (req, res) => {
     const clearToken = req.cookies.jwt;
-
     if (clearToken) {
         res.clearCookie('jwt').json({ msg: 'user are logout' });
     }
 }
 
-// get user 
+// get user
 export const getUser = async (req, res) => {
-    const { userId } = req.params;
+    const id = req.params.id;
+  
     try {
-        const user = await userModel.findById(userId);
-        if (!user) {
-            return res.status(404).json({ msg: 'User not found' });
-        }
-        res.status(200).json(user);
+      const user = await userModel.findById(id);
+      if (user) {
+        const { password, ...otherDetails } = user._doc;
+  
+        res.status(200).json(otherDetails);
+      } else {
+        res.status(404).json("No such User");
+      }
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ msg: 'Server error' });
+      res.status(500).json(error);
     }
-};
+  };
 
 
-
-// conersation of user
+// add conersation of user
 export const newConversation = async(req,res)=>{
     const {senderId ,receiverId } = req.body;
     try{
@@ -94,7 +96,7 @@ export const getUserConversation = async(req,res)=>{
     }
 }
 
-// get chat user
+// add chat user
 export const addUserChat = async(req,res)=>{
     const {sender,text ,chatId} = req.body;
     try {

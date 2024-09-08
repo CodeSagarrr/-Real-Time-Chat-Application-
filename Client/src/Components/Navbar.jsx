@@ -1,40 +1,42 @@
-import axios from 'axios'
-import React from 'react'
-import { Link , useNavigate } from 'react-router-dom'
-import {  ToastContainer,toast  } from 'react-toastify';
+import React, { useContext } from 'react'
+import { Link } from "react-router-dom";
+import { TbLogout } from "react-icons/tb";
+import axios from 'axios';
+import { toast , ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from '../Context/UserContext.jsx';
 
-const Navbar = () => {
-const navigate = useNavigate();
-
-const handleLogout = async() =>{
-    try {
-      const res = await axios.get('/user/logout');
-      toast.success(res.data.msg);
-      setTimeout(()=>{
-        navigate('/login');
-      },3000)  
-    } catch (error) {
-      toast.error(error)
+function Navbar() {
+    const {userLogout} = useContext(UserContext)
+    const handleLogout =async() =>{
+        try {
+            const res = await axios.get('/user/logout')
+            toast.success(res.data.msg)
+            userLogout();
+            setTimeout(()=>{
+                 window.location.href = '/login'
+            },2000)
+        } catch (error) {
+            console.log(error)
+        }
     }
-          
-  }
   return (
     <>
-    <ToastContainer/>
-      <div className='flex w-full'>
+     <ToastContainer />
+       <div className='flex w-full'>
         <div className='ml-10 mt-4 basis-[40%]'>
-          <h1 className='text-3xl font-bold text-[#ffff]'>Chat-App</h1>
+          <h1 className='text-3xl font-bold text-[#ffff]'>Chat</h1>
         </div>
         <div className='basis-[50%] pr-12 mt-4'>
-          <ul className='flex justify-end'>
+            <div className='Chat-window'>
 
-            <Link to="/register"><li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer'>Sign up</li></Link>
-                <li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer' onClick={handleLogout}>Logout</li>
+            </div>
+          <ul className='flex justify-end'>
+            <Link to="/login"><li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer'>Login</li></Link>
+                <li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer'><TbLogout onClick={handleLogout} className='text-4xl font-bold'/></li>
           </ul>
         </div>
       </div>
-      
     </>
   )
 }

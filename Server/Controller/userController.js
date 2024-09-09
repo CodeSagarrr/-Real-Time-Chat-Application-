@@ -74,10 +74,10 @@ export const getUser = async (req, res) => {
 
 // add conersation of user
 export const newConversation = async(req,res)=>{
-    const {senderId ,receiverId } = req.body;
+    const {senderId ,chatId } = req.body;
     try{
         const userConversation = new ConversationsModel({
-            members: [senderId, receiverId],
+            members: [senderId, chatId],
         });
         await userConversation.save();
         res.status(200).json(userConversation)
@@ -88,8 +88,10 @@ export const newConversation = async(req,res)=>{
 //get userConversation
 export const getUserConversation = async(req,res)=>{
     const {userId } = req.params;
+    console.log(userId)
     try{
         const userConversation = await ConversationsModel.find({ members: {$in: [userId]} });
+        console.log(userConversation)
         res.status(200).json(userConversation)
     }catch(err){
         res.status(500).json({ msg: err.message });

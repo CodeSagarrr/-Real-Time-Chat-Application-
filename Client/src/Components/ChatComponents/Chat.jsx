@@ -6,12 +6,15 @@ import axios from 'axios'
 function Chat() {
     const {getData , userInfo} = useContext(UserContext)
     const [chats , setChats] = useState([])
+     useEffect(()=>{
+        getData();
+    },[])
 
     useEffect(()=>{
         const getChats = async() =>{
             try {
-                const chatsRes = await axios.get(`/user/chat/${userInfo.otherDetails._id}`)
-                setChats(chatsRes.data)
+                const chatsRes = await axios.get(`/user/conversation/${userInfo.otherDetails._id}`)
+                setChats(chatsRes.data);
                 console.log(chatsRes.data)
             } catch (error) {
                 console.log(error)
@@ -20,9 +23,7 @@ function Chat() {
     getChats();
     },[userInfo])
 
-    useEffect(()=>{
-        getData();
-    },[])
+   
     return (
         <>
             <div className='flex'>

@@ -36,17 +36,17 @@ app.get('/', (req, res) => {
 
 
 // routes connections
-app.route('/user/register').post(validateUser(validateSchema), handleRegister);
-app.route('/user/login').post(validateUser(loginValidation), handleLogin);
-app.route('/user/logout').get(handleLogout)
-app.route('/user/chat/:id').get(getUser);
-app.route('/user/conversation').post(newConversation);
-app.route('/user/conversation/:userId').get(getUserConversation);
-app.route('/user/chatuser').post(checkUserToken, addUserChat);
-app.route('/user/chatuser/:chatId').get(getUserChat);
+app.route('/user/register').post(validateUser(validateSchema), handleRegister); // register routes
+app.route('/user/login').post(validateUser(loginValidation), handleLogin); // login routes
+app.route('/user/logout').get(handleLogout) // logout routes
+app.route('/user/chat/:id').get(getUser); // get user from userModel database
+app.route('/user/conversation').post(newConversation); // add user converation in conversation database
+app.route('/user/conversation/:userId').get(getUserConversation); // get user from conversation database
+app.route('/user/chatuser').post(checkUserToken, addUserChat); // add user to chat user database 
+app.route('/user/chatuser/:chatId').get(getUserChat); // get user to chat user database
 app.get('/user/chat',checkUserToken,(req,res)=>{
   res.json({ user: req.user, message: "Access granted to chat data" });
-})
+}) // login user can access this rotes data
 
 // socket connections
 io.on('connection',(socket)=>{

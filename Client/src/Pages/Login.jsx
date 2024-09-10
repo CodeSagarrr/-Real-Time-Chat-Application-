@@ -7,7 +7,10 @@ import axios from 'axios';
 import { UserContext } from '../Context/UserContext.jsx'
 
 function Login() {
+    // get login data from uusserContext
     const { userLogin } = useContext(UserContext);
+
+    // form handling for login form
     const [loginData, setLoginData] = useState({ username: '', password: '' });
     const handleChange = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value })
@@ -15,7 +18,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('/user/login', loginData)
+            const res = await axios.post('/user/login', loginData) // get response from server
             if (res.data.msg === 'User are login') {
                 toast.success(res.data.msg)
                 userLogin(res.data);

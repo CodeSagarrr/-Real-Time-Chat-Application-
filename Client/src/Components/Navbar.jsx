@@ -7,7 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from '../Context/UserContext.jsx';
 
 function Navbar() {
+  // get data from user context
     const {userLogout} = useContext(UserContext)
+    // handle logout request from user context and navigate to login page after successful logout operation
     const handleLogout =async() =>{
         try {
             const res = await axios.get('/user/logout')
@@ -27,12 +29,9 @@ function Navbar() {
         <div className='ml-10 mt-4 basis-[40%]'>
           <h1 className='text-3xl font-bold text-[#ffff]'>Chat</h1>
         </div>
-        <div className='basis-[50%] pr-12 mt-4'>
-            <div className='Chat-window'>
-
-            </div>
+        <div className='basis-[60%] mt-4 mr-4'>
           <ul className='flex justify-end'>
-            <Link to="/login"><li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer'>Login</li></Link>
+            <Link to="/login"><li className='text-2xl mx-2 font-bold text-[#ffff] cursor-pointer'>Login</li></Link>
                 <li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer'><TbLogout onClick={handleLogout} className='text-4xl font-bold'/></li>
           </ul>
         </div>

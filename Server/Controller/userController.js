@@ -56,7 +56,6 @@ export const handleLogout = (req, res) => {
 // get user
 export const getUser = async (req, res) => {
     const id = req.params.id;
-  
     try {
       const user = await userModel.findById(id);
       if (user) {
@@ -88,10 +87,8 @@ export const newConversation = async(req,res)=>{
 //get userConversation
 export const getUserConversation = async(req,res)=>{
     const {userId } = req.params;
-    console.log(userId)
     try{
         const userConversation = await ConversationsModel.find({ members: {$in: [userId]} });
-        console.log(userConversation)
         res.status(200).json(userConversation)
     }catch(err){
         res.status(500).json({ msg: err.message });

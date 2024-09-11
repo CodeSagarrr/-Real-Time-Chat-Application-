@@ -46,7 +46,7 @@ app.route('/user/chatuser').post(checkUserToken, addUserChat); // add user to ch
 app.route('/user/chatuser/:chatId').get(getUserChat); // get user to chat user database
 app.get('/user/chat',checkUserToken,(req,res)=>{
   res.json({ user: req.user, message: "Access granted to chat data" });
-}) // login user can access this rotes data
+}) // login user can access this routes data
 
 // socket connections
 io.on('connection',(socket)=>{

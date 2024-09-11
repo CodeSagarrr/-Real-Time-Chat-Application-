@@ -12,7 +12,6 @@ function Conversation({ Conversation, currentUserId }) {
         const getChatData = async () => {
         try {
             const res = await axios.get(`/user/chat/${userId}`) // get other user in members array 
-            console.log(res.data);
             setUserChatData(res.data);
         } catch (error) {
             console.log(error);

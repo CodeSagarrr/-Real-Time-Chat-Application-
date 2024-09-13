@@ -11,7 +11,6 @@ function ChatBox({ chat, currentUser }) {
     const getChatData = async () => {
       try {
         const res = await axios.get(`/user/chat/${userId}`) // get other user in members array 
-        console.log(res.data);
         setUserChatData(res.data);
       } catch (error) {
         console.log(error);
@@ -22,14 +21,19 @@ function ChatBox({ chat, currentUser }) {
 
   // get message from  server and fetch data
   useEffect(()=>{
+    const MsgId = chat?.members?.find((id) => id !== currentUser);
     const fetchMessage = async() =>{
       try {
-        
+        const msgRes = await axios.get(`/user/chatuser/${MsgId}`)
+        setGetMessages(msgRes.data);
+        console.log(msgRes.data);
       } catch (error) {
         console.log(error)
       }
     }
-  },[])
+    if(chat !== null) fetchMessage();
+  },[chat , currentUser])
+
   return (
     <>
       <div className=' w-[76vw] h-[92vh] mt-4 mx-10 text-white bg-[#434343] rounded-lg'>

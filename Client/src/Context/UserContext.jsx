@@ -14,7 +14,7 @@ export const UserProvider = ({children}) =>{
         else{
             window.location.href='/login';
         }
-    },[user])
+    },[])
 
     const userLogin =(userData) =>{
         setUserInfo(userData);
@@ -41,7 +41,7 @@ export const UserProvider = ({children}) =>{
     }
 
     return (
-        <UserContext.Provider value={{userInfo ,userLogin ,userLogout ,getData }}>
+        <UserContext.Provider value={{userInfo ,userLogin ,userLogout , getData }}>
             {children}
         </UserContext.Provider>
     );

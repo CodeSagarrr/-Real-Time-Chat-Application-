@@ -17,6 +17,7 @@
     "react-input-emoji": "^5.9.0",
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
+    "socket.io-client": "^4.7.5",
     "timeago.js": "^4.0.0-beta.3"
   },
   "devDependencies": {

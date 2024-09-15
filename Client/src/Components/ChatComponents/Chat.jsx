@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Navbar from '../Navbar'
 import { UserContext } from './../../Context/UserContext.jsx'
 import axios from 'axios'
 import Conversation from './Conversation.jsx'
 import ChatBox from './ChatBox.jsx'
+import {io} from 'socket.io-client'
 
 function Chat() {
     // get user login information from uerContext
@@ -11,7 +12,17 @@ function Chat() {
     const [chats, setChats] = useState([])
     // currentChat state for chatBox
     const [currentChat, setCurrentChat] = useState([]);
+    const [onlineUser , setOnlineUser ] = useState([]);
+    const socket = useRef()
 
+    // socket state for chatBox
+    useEffect(()=>{
+        socket.current = io('http://localhost:4000/')
+        socket.current.emit('new-user-add',userInfo?.otherDetails?._id)
+        socket.current.on('active-users',(users)=>{
+            setOnlineUser('active-users',users)
+        })
+    },[userInfo])
     // protect user rotes
     useEffect(() => {
         getData();
@@ -21,7 +32,7 @@ function Chat() {
     useEffect(() => {
         const getChats = async () => {
             try {
-                const chatsRes = await axios.get(`/user/conversation/${userInfo.otherDetails._id}`)
+                const chatsRes = await axios.get(`/user/conversation/${userInfo?.otherDetails?._id}`)
                 setChats(chatsRes.data);
                 console.log(chatsRes.data)
             } catch (error) {

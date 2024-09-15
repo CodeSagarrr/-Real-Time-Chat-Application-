@@ -9,6 +9,11 @@ function ChatBox({ chat, currentUser }) {
   const [userChatData, setUserChatData] = useState('');
   const [getMessages, setGetMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+
+  const otherUser = chat?.members?.find((id) => id !== currentUser)
+  const handleChange = (newMessage) => {
+    setNewMessage(newMessage);
+  };
   // get the conversation from server
   useEffect(() => {
     if (!chat) return;
@@ -22,7 +27,7 @@ function ChatBox({ chat, currentUser }) {
         console.log(error.message);
       }
     }
-    if (chat !== null) getChatData();
+  getChatData();
   }, [chat, currentUser])
 
   // get message from  server and fetch data
@@ -38,16 +43,29 @@ function ChatBox({ chat, currentUser }) {
         console.log(error.message)
       }
     }
-    if (chat !== null) fetchMessage();
+   fetchMessage();
   }, [chat, currentUser])
 
-  const handleChange = (newMessage) => {
-    setNewMessage(newMessage);
-  };
+  const handleSendMessage =async (e) =>{
+    e.preventDefault();
+    const message = {
+      sender:currentUser,
+      text:newMessage,
+      chatId: otherUser,
+      timestamp: new Date().getHours,
+    }
+    try {
+      const sendRes =  await axios.post('/user/chatuser',message);
+      setGetMessages([...getMessages, sendRes.data]);
+      setNewMessage("")
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   return (
     <>
-    { chat ? (<>
+    { chat ? <>
       <div className=' w-[76vw] h-[92vh] mt-4 mx-10 text-white bg-[#434343] rounded-lg'>
           <div className='flex gap-x-3 py-4'>
             <div>
@@ -59,14 +77,14 @@ function ChatBox({ chat, currentUser }) {
           </div>
             <hr style={{ width: '95%', border: '0.1px solid #ececec', marginLeft: '2rem' }} />
 
-            <div className="chat chat-end chat-body">
+            <div className="chat chat-end chat-body gap-y-4">
 
               {
                 getMessages.map((msg, index) => (
-                  <div className="chat-bubble chat-bubble-success">
+                  <div className="chat-bubble chat-bubble-success " key={index}>
                     <>
-                      <p key={index} className='font-semibold '>{msg.text}</p>
-                      <p className='text-black text-[12px]'>{format(msg.createdAt)}</p>
+                      <p  className='font-semibold '>{msg.text}</p>
+                      <p className='text-black text-[12px]'>{format(msg.timestamp)}</p>
                     </>
                   </div>
                 ))
@@ -81,9 +99,9 @@ function ChatBox({ chat, currentUser }) {
                 placeholder="Type here ..." />
             </div>
             
-            <button className="btn absolute bottom-0 right-[21rem] mb-6"><BsFillSendFill className='text-[22px]' /></button>
+            <button className="btn absolute bottom-0 right-[21rem] mb-6"  onClick={handleSendMessage}><BsFillSendFill className='text-[22px]'/></button>
 
-      </div> </>)
+      </div> </>
       :
       <div className='flex justify-center items-center h-[92vh] w-[76vw] mx-10 text-white bg-[#434343] rounded-lg'>
         <p className='font-bold text-xl text-center'>Select a conversation to start chatting.</p>

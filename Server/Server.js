@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import http from 'http';
 import bodyParser from 'body-parser';
+import { Server} from 'socket.io'
 import mongoConnect from './db/MongoDB.js';
 import path from 'path';
 import { handleRegister, handleLogin, handleLogout, getUser, newConversation, getUserConversation, addUserChat, getUserChat } from './Controller/userController.js';
@@ -15,6 +16,12 @@ import cors from 'cors';
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
+const io = new Server(server,{
+  cors: {
+    origin: "http://localhost:5173",
+    credentials: true,
+  },
+});
 
 // config dependency
 app.use(bodyParser.json());
@@ -47,6 +54,34 @@ app.get('/user/chat', checkUserToken, (req, res) => {
 }) // login user can access this routes data
 
 // socket connections
+
+let activeUsers = [];
+
+io.on('connection' , (socket)=>{
+    // add new users in the activeUsers array
+    socket.on('new-user-add',(newUserId) =>{
+        // user not add priviously
+        if (newUserId) {
+            // Check if the user has not already been added
+            if (!activeUsers.some((user) => user.userId === newUserId)) {
+                activeUsers.push({ userId: newUserId, socketId: socket.id });
+                console.log('New user added', activeUsers);
+
+                io.emit('active-users',activeUsers);
+            }
+        } else {
+            console.log('Invalid newUserId:', newUserId);
+        }
+
+
+    // disconnect the user
+    socket.on('disconnect' , ()=>{
+      let  activeUser = activeUsers.filter((user)=>user.socketId !== socket.id);
+      console.log('User disconnected',activeUser);
+      io.emit('active-users',activeUser);
+    })
+})})
+
 
 // server listen
 const port = process.env.PORT || 8000;

@@ -4,6 +4,8 @@ import './ChatBox.css'
 import { format } from 'timeago.js'
 import { BsFillSendFill } from "react-icons/bs";
 import InputEmoji from 'react-input-emoji'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ChatBox({ chat, currentUser }) {
   const [userChatData, setUserChatData] = useState('');
@@ -52,14 +54,13 @@ function ChatBox({ chat, currentUser }) {
       sender: currentUser,
       text: newMessage,
       chatId: otherUser,
-      timestamp: new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(),
     }
     try {
       if (!message.text){
-        alert('Please enter a message');
+        toast.error('Please enter a message');
         return;
       }
-      const sendRes = await axios.post('/user/chatuser', message);
+      const sendRes = await axios.post('/user/chatuser/', message);
       setGetMessages([...getMessages, sendRes.data]);
       setNewMessage("")
     } catch (error) {
@@ -81,20 +82,21 @@ function ChatBox({ chat, currentUser }) {
           </div>
           <hr style={{ width: '95%', border: '0.1px solid #ececec', marginLeft: '2rem' }} />
 
-          <div className="chat chat-end chat-body gap-y-4">
-
+          <div className='chat-body'>
             {
               getMessages.map((msg, index) => (
-                <div className={msg.sender === currentUser ? 'chat chat-bubble chat-end chat-bubble-success' : 'chat chat-start chat-bubble chat-bubble-accent'} key={index}>
+                <div className={`message ${msg.sender === currentUser ? 'own' : 'other'}`}  key={index}>
                   <>
                     <p className='font-semibold '>{msg.text}</p>
                     <p className='text-black text-[12px]'>{format(msg.createdAt)}</p>
                   </>
                 </div>
+      
               ))
+              
             } 
-
           </div>
+     
 
           <div className='absolute bottom-0 w-[44vw] mb-5 ml-64 '>
             <InputEmoji
@@ -110,7 +112,7 @@ function ChatBox({ chat, currentUser }) {
         <div className='flex justify-center items-center h-[92vh] w-[76vw] mx-10 text-white bg-[#434343] rounded-lg'>
           <p className='font-bold text-xl text-center'>Select a conversation to start chatting.</p>
         </div>}
-
+<ToastContainer/>
     </>
   )
 }

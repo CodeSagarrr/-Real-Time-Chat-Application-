@@ -17,12 +17,13 @@ function Chat() {
 
     // socket state for chatBox
     useEffect(()=>{
-        socket.current = io('http://localhost:4000')
+        socket.current = io('http://localhost:8080')
         socket.current.emit('new-user-add',userInfo?.otherDetails?._id)
         socket.current.on('active-users',(users)=>{
             setOnlineUser('active-users',users)
+            console.log('online users',onlineUser)
         })
-    },[userInfo._id])
+    },[userInfo?.otherDetails?._id])
     // protect user rotes
     useEffect(() => {
         getData();

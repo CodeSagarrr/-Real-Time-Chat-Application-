@@ -8,7 +8,7 @@ import {io} from 'socket.io-client'
 
 function Chat() {
     // get user login information from uerContext
-    const { getData, userInfo } = useContext(UserContext)
+    const {  getData,userInfo } = useContext(UserContext)
     const [chats, setChats] = useState([])
     // currentChat state for chatBox
     const [currentChat, setCurrentChat] = useState([]);
@@ -17,12 +17,12 @@ function Chat() {
 
     // socket state for chatBox
     useEffect(()=>{
-        socket.current = io('http://localhost:4000/')
+        socket.current = io('http://localhost:4000')
         socket.current.emit('new-user-add',userInfo?.otherDetails?._id)
         socket.current.on('active-users',(users)=>{
             setOnlineUser('active-users',users)
         })
-    },[userInfo])
+    },[userInfo._id])
     // protect user rotes
     useEffect(() => {
         getData();

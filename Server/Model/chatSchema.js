@@ -16,11 +16,8 @@ const chatSchema = mongoose.Schema({
         ref: 'userModel',
         required: true,
     },
-    timestamp:{
-        type: Date,
-        default: Date.now()
-    },
-});
+    
+},{timestamps: true});
 
 const chatModel = mongoose.model('chatModel', chatSchema);
 

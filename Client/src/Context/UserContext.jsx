@@ -11,9 +11,7 @@ export const UserProvider = ({children}) =>{
         if(user){
             setUserInfo(user);
         }
-        else{
-            window.location.href='/login';
-        }
+       
     },[])
 
     const userLogin =(userData) =>{

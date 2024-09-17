@@ -19,6 +19,7 @@ const server = http.createServer(app);
 const io = new Server(server,{
   cors: {
     origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
     credentials: true,
   },
 });
@@ -66,19 +67,15 @@ io.on('connection' , (socket)=>{
             if (!activeUsers.some((user) => user.userId === newUserId)) {
                 activeUsers.push({ userId: newUserId, socketId: socket.id });
                 console.log('New user added', activeUsers);
-
-                io.emit('active-users',activeUsers);
+                io.emit('get-users',activeUsers);
             }
-        } else {
-            console.log('Invalid newUserId:', newUserId);
         }
-
 
     // disconnect the user
     socket.on('disconnect' , ()=>{
-      let  activeUser = activeUsers.filter((user)=>user.socketId !== socket.id);
-      console.log('User disconnected',activeUser);
-      io.emit('active-users',activeUser);
+      activeUsers = activeUsers.filter((user)=>user.socketId !== socket.id);
+      console.log('User disconnected',activeUsers);
+      io.emit('get-users',activeUsers);
     })
 })})
 

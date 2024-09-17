@@ -17,13 +17,13 @@ function Chat() {
 
     // socket state for chatBox
     useEffect(()=>{
-        socket.current = io('http://localhost:8080')
+        socket.current = io('http://localhost:8080/')
         socket.current.emit('new-user-add',userInfo?.otherDetails?._id)
-        socket.current.on('active-users',(users)=>{
-            setOnlineUser('active-users',users)
-            console.log('online users',onlineUser)
+        socket.current.on('get-users',(users)=>{
+            setOnlineUser('get-users',users)
+            console.log(onlineUser)
         })
-    },[userInfo?.otherDetails?._id])
+    },[userInfo])
     // protect user rotes
     useEffect(() => {
         getData();
@@ -33,9 +33,9 @@ function Chat() {
     useEffect(() => {
         const getChats = async () => {
             try {
-                const chatsRes = await axios.get(`/user/conversation/${userInfo?.otherDetails?._id}`)
+                const chatsRes = await axios.get(`/user/conversation/${userInfo.otherDetails?._id}`)
                 setChats(chatsRes.data);
-                console.log(chatsRes.data)
+
             } catch (error) {
                 console.log(error)
             }

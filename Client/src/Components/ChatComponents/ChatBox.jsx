@@ -4,15 +4,18 @@ import './ChatBox.css'
 import { format } from 'timeago.js'
 import { BsFillSendFill } from "react-icons/bs";
 import InputEmoji from 'react-input-emoji'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-function ChatBox({ chat, currentUser , setSendMessage }) {
+function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
   const [userChatData, setUserChatData] = useState('');
   const [getMessages, setGetMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
-
+// recievedMessage from the socket server
+  useEffect(()=>{
+    if(recievedMessage !== null){
+      setGetMessages([...getMessages, recievedMessage]);
+    }
+  },[recievedMessage])
   // get the conversation from server
   useEffect(() => {
     if (!chat) return;
@@ -58,10 +61,6 @@ function ChatBox({ chat, currentUser , setSendMessage }) {
     const receiverId = chat?.members?.find((id) => id !== currentUser)
     setSendMessage({...message , receiverId})
     try {
-      if (!message.text){
-        toast.error('Please enter a message');
-        return;
-      }
        await axios.post('/user/chatuser/', message);
       const newMsg = {
         sender: currentUser,
@@ -115,8 +114,7 @@ function ChatBox({ chat, currentUser , setSendMessage }) {
         :
         <div className='flex justify-center items-center h-[92vh] w-[76vw] mx-10 text-white bg-[#434343] rounded-lg'>
           <p className='font-bold text-xl text-center'>Select a conversation to start chatting.</p>
-        </div>}
-<ToastContainer/>
+        </div> }
     </>
   )
 }

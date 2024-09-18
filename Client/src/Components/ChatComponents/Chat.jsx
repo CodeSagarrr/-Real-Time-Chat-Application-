@@ -13,6 +13,8 @@ function Chat() {
     // currentChat state for chatBox
     const [currentChat, setCurrentChat] = useState([]);
     const [onlineUser , setOnlineUser ] = useState([]);
+    const [sendMessage , setSendMessage] = useState(null); // message send direct socket
+    const [recievedMessage , setRecievedMessage] = useState(null); // get message from other user connect socket
     const socket = useRef()
 
     // socket state for chatBox
@@ -21,13 +23,25 @@ function Chat() {
         socket.current.emit('new-user-add',userInfo?.otherDetails?._id)
         socket.current.on('get-users',(users)=>{
             setOnlineUser('get-users',users)
-            console.log(onlineUser)
         })
     },[userInfo])
     // protect user rotes
     useEffect(() => {
         getData();
     }, [])
+    // send data to socket server 
+    useEffect(()=>{
+        if(sendMessage !== null){
+            socket.current.emit('send-Message', sendMessage)
+        }
+    },[sendMessage])
+    // get data from ther user from socket server
+
+    useEffect(()=>{
+        socket.current.on('recieved-message',(userData)=>{
+            setRecievedMessage(userData)
+        })
+    },[])
 
     // get user members information from server
     useEffect(() => {
@@ -46,6 +60,7 @@ function Chat() {
 
     return (
         <>
+        {/* {left side all user} */}
             <div className='flex'>
                 <div className=' basis-[20%] flex flex-col pl-8 pt-10 text-black  bg-[#242424] h-screen rounded-r-xl'>
                     <input
@@ -62,10 +77,11 @@ function Chat() {
                         }
                     </div>
                 </div>
+                {/* {right side chat body} */}
                 <div className='basis-[80%] text-black '>
                     <Navbar />
                     <div>
-                        <ChatBox chat={currentChat} currentUser={userInfo?.otherDetails?._id} />
+                        <ChatBox chat={currentChat} currentUser={userInfo?.otherDetails?._id} setSendMessage={setSendMessage} />
                     </div>
                 </div>
             </div>

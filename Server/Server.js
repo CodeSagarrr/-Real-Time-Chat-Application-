@@ -71,6 +71,17 @@ io.on('connection' , (socket)=>{
             }
         }
 
+        // get data from client and send to all users whos connect to sockets
+        socket.on('send-Message',(userData) =>{
+          const {receiverId} = userData;
+          const user = activeUsers.find((user)=>user.userId === receiverId);
+          console.log('getting id from recieved user', receiverId);
+          console.log(userData)
+          if(user){
+            io.to(user.socketId).emit('recieved-message',userData)
+          }
+        })
+
     // disconnect the user
     socket.on('disconnect' , ()=>{
       activeUsers = activeUsers.filter((user)=>user.socketId !== socket.id);

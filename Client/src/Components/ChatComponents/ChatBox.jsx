@@ -7,7 +7,7 @@ import InputEmoji from 'react-input-emoji'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function ChatBox({ chat, currentUser }) {
+function ChatBox({ chat, currentUser , setSendMessage }) {
   const [userChatData, setUserChatData] = useState('');
   const [getMessages, setGetMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -54,13 +54,22 @@ function ChatBox({ chat, currentUser }) {
       text: newMessage,
       chatId: chat._id,
     }  
+    // send message to socket server
+    const receiverId = chat?.members?.find((id) => id !== currentUser)
+    setSendMessage({...message , receiverId})
     try {
       if (!message.text){
         toast.error('Please enter a message');
         return;
       }
-      const sendRes = await axios.post('/user/chatuser/', message);
-      setGetMessages([...getMessages, sendRes]);
+       await axios.post('/user/chatuser/', message);
+      const newMsg = {
+        sender: currentUser,
+        text: newMessage,
+        createdAt: new Date().toISOString(), // Add the current timestamp
+        chatId: chat._id,
+      };
+      setGetMessages([...getMessages, newMsg]);
       setNewMessage("")
     } catch (error) {
       console.log(error.message)

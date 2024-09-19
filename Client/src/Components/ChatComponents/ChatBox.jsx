@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './ChatBox.css'
 import { format } from 'timeago.js'
 import { BsFillSendFill } from "react-icons/bs";
@@ -9,6 +9,7 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
   const [userChatData, setUserChatData] = useState('');
   const [getMessages, setGetMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const scroll = useRef();
 
 // recievedMessage from the socket server
   useEffect(()=>{
@@ -37,7 +38,7 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
     if (!chat) return;
     const fetchMessage = async () => {
       try {
-        const msgRes = await axios.get(`/user/chatuser/${chat._id}`)
+        const msgRes = await axios.get(`/user/chatuser/${chat?._id}`)
         setGetMessages(msgRes.data);
       } catch (error) {
         console.log(error.message)
@@ -75,10 +76,15 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
     }
   }
 
+  // scroll the last message to the bottom 
+  useEffect(()=>{
+    scroll.current?.scrollIntoView({behavior: 'smooth'});
+  },[getMessages])
+
   return (
     <>
       {chat ? <>
-        <div className=' w-[76vw] h-[92vh] mt-4 mx-10 text-white bg-[#434343] rounded-lg'>
+        <div className=' sm:w-[76vw] w-[72vw] h-[92vh] mt-4 sm:mx-10 mx-4 text-white bg-[#434343] rounded-lg  min-[662px]:w-[73vw]  min-[662px]:mx-4'>
           <div className='flex gap-x-3 py-4'>
             <div>
               <img src={userChatData.profilePicture} className='w-[60px] h-[60px] rounded-[50%] ml-10' />
@@ -87,12 +93,12 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
               <p className='font-bold text-white'>{userChatData.username}</p>
             </div>
           </div>
-          <hr style={{ width: '95%', border: '0.1px solid #ececec', marginLeft: '2rem' }} />
+          <hr style={{ width: '92%', border: '0.1px solid #ececec', marginLeft: '2rem' }} />
 
           <div className='chat-body'>
               {
                 getMessages.map((message , index) =>(
-                  <div className={message.sender === currentUser ? 'message own' : 'message '} key={index}>
+                  <div className={message.sender === currentUser ? 'message own' : 'message '} ref={scroll} key={index}>
                       <p className='font-semibold '>{message.text}</p>
                       <p className='text-black text-[12px]'>{format(message.createdAt)}</p>
                   </div>
@@ -101,14 +107,14 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
           </div>
      
 
-          <div className='absolute bottom-0 w-[44vw] mb-5 ml-64 '>
+          <div className='absolute bottom-0 sm:w-[44vw] md:w-[63vw] w-[59vw] mb-5 sm:ml-64 ml-4 md:ml-[1rem] min-[662px]:w-[60vw] min-[662px]:ml-1 '>
             <InputEmoji
               value={newMessage}
               onChange={handleChange}
               placeholder="Type here ..." />
           </div>
 
-          <button className="btn absolute bottom-0 right-[21rem] mb-6" onClick={handleSendMessage}><BsFillSendFill className='text-[22px]' /></button>
+          <button className="btn absolute bottom-0 sm:right-[21rem] right-8 mb-6 md:right-[4rem]  min-[662px]:right-[1rem]" onClick={handleSendMessage}><BsFillSendFill className='text-[22px]' /></button>
 
         </div> </>
         :

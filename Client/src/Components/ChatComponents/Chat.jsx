@@ -64,12 +64,12 @@ function Chat() {
         <>
             {/* {left side all user} */}
             <div className='flex'>
-                <div className=' basis-[20%] flex flex-col pl-8 pt-10 text-black  bg-[#242424] h-screen rounded-r-xl'>
+                <div className=' sm:basis-[20%] basis-[24%] md:basis-[30%] flex flex-col sm:pl-8  pl-0 md:pl-0 pt-10 text-black  bg-[#242424] h-screen rounded-r-xl'>
                     <input
                         type="text"
                         placeholder="Search Friends..."
-                        className="input input-bordered input-primary w-full max-w-xs" />
-                    <div className='mt-4'>
+                        className="input input-bordered input-primary w-full max-w-" />
+                    <div className='mt-4 '>
                         {
                             chats.map((c, i) => (
                                 <div key={i} onClick={() => setCurrentChat(c)}>

@@ -23,11 +23,11 @@ function Conversation({ Conversation, currentUserId }) {
 
     return (
         <>
-            <div className='flex gap-x-4 pt-4 hover:bg-[#545454] pb-4 pl-4 mr-7 rounded-xl cursor-pointer'>
+            <div className='flex sm:flex-row flex-col md:flex-col items-center sm:gap-x-4 gap-y-2 pt-4 hover:bg-[#545454] pb-4 sm:pl-4 pl-2 sm:mr-7 mr-1 rounded-xl cursor-pointer'>
                 <div>
-                    <img src={userChatData?.profilePicture} className='w-[60px] h-[60px] rounded-[50%]' />
+                    <img src={userChatData?.profilePicture} className='w-[60px] h-[60px] rounded-[50%] ' />
                 </div>
-                <div className='flex flex-col justify-center'>
+                <div className='flex flex-col sm:justify-center items-center'>
                     <p className='font-bold text-white'>{userChatData?.username}</p>
                     <p className='text-white'>Online</p>
                 </div>

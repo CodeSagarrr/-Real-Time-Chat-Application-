@@ -25,11 +25,11 @@ function Navbar() {
   return (
     <>
      <ToastContainer />
-       <div className='flex w-full'>
+       <div className='flex sm:w-full w-[94%]'>
         <div className='ml-10 mt-4 basis-[40%]'>
           <h1 className='text-3xl font-bold text-[#ffff]'>Chat</h1>
         </div>
-        <div className='basis-[60%] mt-4 mr-4'>
+        <div className='basis-[60%] mt-4 sm:mr-4 mr-0'>
           <ul className='flex justify-end'>
             <Link to="/login"><li className='text-2xl mx-2 font-bold text-[#ffff] cursor-pointer'>Login</li></Link>
                 <li className='text-2xl mx-4 font-bold text-[#ffff] cursor-pointer'><TbLogout onClick={handleLogout} className='text-4xl font-bold'/></li>

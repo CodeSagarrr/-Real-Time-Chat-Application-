@@ -23,7 +23,7 @@ function Conversation({ Conversation, currentUserId }) {
 
     return (
         <>
-            <div className='flex sm:flex-row flex-col md:flex-col items-center sm:gap-x-4 gap-y-2 pt-4 hover:bg-[#545454] pb-4 sm:pl-4 pl-2 sm:mr-7 mr-1 rounded-xl cursor-pointer'>
+            <div className='flex sm:flex-row flex-col  items-center sm:gap-x-4 gap-y-2 pt-4 hover:bg-[#545454] pb-4 sm:pl-4 pl-2 sm:mr-7 mr-1 rounded-xl cursor-pointer'>
                 <div>
                     <img src={userChatData?.profilePicture} className='w-[60px] h-[60px] rounded-[50%] ' />
                 </div>

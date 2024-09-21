@@ -84,7 +84,7 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
   return (
     <>
       {chat ? <>
-        <div className=' sm:w-[76vw] w-[72vw] h-[92vh] mt-4 sm:mx-10 mx-4 text-white bg-[#434343] rounded-lg  min-[662px]:w-[73vw]  min-[662px]:mx-4'>
+        <div className=' sm:w-[76vw] w-[72vw] h-[92vh] mt-4 sm:mx-10 mx-4 text-white bg-[#434343] rounded-lg'>
           <div className='flex gap-x-3 py-4'>
             <div>
               <img src={userChatData.profilePicture} className='w-[60px] h-[60px] rounded-[50%] ml-10' />
@@ -107,14 +107,14 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
           </div>
      
 
-          <div className='absolute bottom-0 sm:w-[44vw] md:w-[63vw] w-[59vw] mb-5 sm:ml-64 ml-4 md:ml-[1rem] min-[662px]:w-[60vw] min-[662px]:ml-1 '>
+          <div className='absolute bottom-0 sm:w-[44vw] w-[59vw] mb-5 sm:ml-64 ml-4 '>
             <InputEmoji
               value={newMessage}
               onChange={handleChange}
               placeholder="Type here ..." />
           </div>
 
-          <button className="btn absolute bottom-0 sm:right-[21rem] right-8 mb-6 md:right-[4rem]  min-[662px]:right-[1rem]" onClick={handleSendMessage}><BsFillSendFill className='text-[22px]' /></button>
+          <button className="btn absolute bottom-0 sm:right-[21rem] right-8 mb-6  " onClick={handleSendMessage}><BsFillSendFill className='text-[22px]' /></button>
 
         </div> </>
         :

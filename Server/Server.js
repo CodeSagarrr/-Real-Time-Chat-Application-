@@ -50,6 +50,7 @@ app.route('/user/conversation').post(newConversation); // add user converation i
 app.route('/user/conversation/:userId').get(getUserConversation); // get user from conversation database
 app.route('/user/chatuser').post(checkUserToken, addUserChat); // add user to chat user database 
 app.route('/user/chatuser/:chatId').get(getUserChat); // get user to chat user database
+app.route('/user/profile').post(userProfile); // set uuser profile
 app.get('/user/chat', checkUserToken, (req, res) => {
   res.json({ user: req.user, message: "Access granted to chat data" });
 }) // login user can access this routes data

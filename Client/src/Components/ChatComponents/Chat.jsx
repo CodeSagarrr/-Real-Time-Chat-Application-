@@ -5,6 +5,7 @@ import axios from 'axios'
 import Conversation from './Conversation.jsx'
 import ChatBox from './ChatBox.jsx'
 import { io } from 'socket.io-client'
+import { Link } from 'react-router-dom'
 
 function Chat() {
     // get user login information from uerContext
@@ -63,7 +64,7 @@ function Chat() {
     return (
         <>
             {/* {left side all user} */}
-            <div className='flex'>
+            <div className='flex relative'>
                 <div className=' sm:basis-[20%] basis-[24%] flex flex-col sm:pl-8  pl-0 pt-10 text-black  bg-[#242424] h-screen rounded-r-xl'>
                     <input
                         type="text"
@@ -78,6 +79,14 @@ function Chat() {
                             ))
                         }
                     </div>
+                    <Link to="/profile">
+                    <div className='w-full flex flex-col absolute bottom-10  ml-2'>
+                    <img src={userInfo?.otherDetails?.profilePicture} 
+                         className='w-[60px] h-[60px] rounded-[50%] bg-center bg-cover '/>
+                    <p className='text-white text-2xl font-semibold'>Profile</p>
+                    </div>
+                        
+                    </Link>
                 </div>
                 {/* {right side chat body} */}
                 <div className='basis-[80%] text-black '>
@@ -86,6 +95,7 @@ function Chat() {
                         <ChatBox chat={currentChat} currentUser={userInfo?.otherDetails?._id} setSendMessage={setSendMessage} recievedMessage={recievedMessage} />
                     </div>
                 </div>
+
             </div>
         </>
     )

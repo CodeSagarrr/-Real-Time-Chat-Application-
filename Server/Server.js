@@ -6,6 +6,7 @@ import { Server} from 'socket.io'
 import mongoConnect from './db/MongoDB.js';
 import path from 'path';
 import { handleRegister, handleLogin, handleLogout, getUser, newConversation, getUserConversation, addUserChat, getUserChat } from './Controller/userController.js';
+import { changeUserProfile , getUserProfile} from './Controller/profileController.js'
 import { validateSchema, loginValidation } from './Validations/registerValidation.js';
 import checkUserToken from './Middelwere/checkUserToken.js';
 import validateUser from './Middelwere/checkValidation.js';
@@ -50,7 +51,8 @@ app.route('/user/conversation').post(newConversation); // add user converation i
 app.route('/user/conversation/:userId').get(getUserConversation); // get user from conversation database
 app.route('/user/chatuser').post(checkUserToken, addUserChat); // add user to chat user database 
 app.route('/user/chatuser/:chatId').get(getUserChat); // get user to chat user database
-app.route('/user/profile').post(userProfile); // set uuser profile
+app.route('/user/profile/:id').put(changeUserProfile); // change user profile 
+app.route('/user/profile/:id').get(getUserProfile) // get user profile
 app.get('/user/chat', checkUserToken, (req, res) => {
   res.json({ user: req.user, message: "Access granted to chat data" });
 }) // login user can access this routes data

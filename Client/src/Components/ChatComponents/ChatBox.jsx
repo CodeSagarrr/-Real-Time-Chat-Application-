@@ -85,7 +85,7 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
     <>
       {chat ? <>
         <div className=' sm:w-[76vw] w-[72vw] h-[92vh] mt-4 sm:mx-10 mx-4 text-white bg-[#434343] rounded-lg'>
-          <div className='flex gap-x-3 py-4'>
+          <div className='flex gap-x-3 py-4 '>
             <div>
               <img src={userChatData.profilePicture} className='w-[60px] h-[60px] rounded-[50%] ml-10' />
             </div>
@@ -114,11 +114,11 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
               placeholder="Type here ..." />
           </div>
 
-          <button className="btn absolute bottom-0 sm:right-[21rem] right-8 mb-6  " onClick={handleSendMessage}><BsFillSendFill className='text-[22px]' /></button>
+          <button className="btn absolute bottom-0 sm:right-[21rem] right-6 mb-6  " onClick={handleSendMessage}><BsFillSendFill className='text-[22px]' /></button>
 
         </div> </>
         :
-        <div className='flex justify-center items-center h-[92vh] w-[76vw] mx-10 text-white bg-[#434343] rounded-lg'>
+        <div className='flex justify-center items-center  h-[92vh] w-[76vw] sm:mt-[10px] mt-[10px] mx-10 text-white bg-[#434343] rounded-lg'>
           <p className='font-bold text-xl text-center'>Select a conversation to start chatting.</p>
         </div> }
     </>

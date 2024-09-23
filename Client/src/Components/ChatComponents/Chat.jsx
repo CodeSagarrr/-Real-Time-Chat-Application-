@@ -12,7 +12,7 @@ function Chat() {
     const { getData, userInfo } = useContext(UserContext)
     const [chats, setChats] = useState([])
     // currentChat state for chatBox
-    const [currentChat, setCurrentChat] = useState([]);
+    const [currentChat, setCurrentChat] = useState(null);
     const [onlineUser, setOnlineUser] = useState([]);
     const [sendMessage, setSendMessage] = useState(null); // message send direct socket
     const [recievedMessage, setRecievedMessage] = useState(null); // get message from other user connect socket
@@ -69,8 +69,8 @@ function Chat() {
                     <input
                         type="text"
                         placeholder="Search Friends..."
-                        className="input input-bordered input-primary w-full max-w-[90%]" />
-                    <div className='mt-4 '>
+                        className="input input-bordered input-primary w-full max-w-[90%] sm:ml-0 ml-2" />
+                    <div className='mt-4 overflow-y-scroll'>
                         {
                             chats.map((c, i) => (
                                 <div key={i} onClick={() => setCurrentChat(c)}>
@@ -80,10 +80,10 @@ function Chat() {
                         }
                     </div>
                     <Link to="/profile">
-                    <div className='w-full flex flex-col absolute bottom-10  ml-2'>
+                    <div className='flex flex-col absolute bottom-6 cursor-pointer  sm:ml-2 ml-10'>
                     <img src={userInfo?.otherDetails?.profilePicture} 
                          className='w-[60px] h-[60px] rounded-[50%] bg-center bg-cover '/>
-                    <p className='text-white text-2xl font-semibold'>Profile</p>
+                    <p className='text-white text-2xl font-semibold font-sans'>Profile</p>
                     </div>
                         
                     </Link>

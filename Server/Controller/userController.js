@@ -1,7 +1,7 @@
 import userModel from '../Model/authSchema.js';
 import chatModel from '../Model/chatSchema.js';
 import ConversationsModel from '../Model/ConverSationSchema.js'
-import bcrypt from 'bcrypt'
+import bcrypt  from 'bcrypt'
 import jwt from 'jsonwebtoken';
 
 // registration routes

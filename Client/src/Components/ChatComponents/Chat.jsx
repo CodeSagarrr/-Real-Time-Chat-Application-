@@ -6,6 +6,7 @@ import Conversation from './Conversation.jsx'
 import ChatBox from './ChatBox.jsx'
 import { io } from 'socket.io-client'
 import { Link } from 'react-router-dom'
+import { FaPlus } from "react-icons/fa6";
 
 function Chat() {
     // get user login information from uerContext
@@ -52,14 +53,14 @@ function Chat() {
             try {
                 const chatsRes = await axios.get(`/user/conversation/${userInfo.otherDetails?._id}`)
                 setChats(chatsRes.data);
-
+                console.log(chatsRes.data)
             } catch (error) {
                 console.log(error)
             }
         }
         getChats();
     }, [userInfo])
-
+console.log(chats)
 
     return (
         <>
@@ -74,18 +75,27 @@ function Chat() {
                         {
                             chats.map((c, i) => (
                                 <div key={i} onClick={() => setCurrentChat(c)}>
-                                    <Conversation key={i} Conversation={c} currentUserId={userInfo.otherDetails._id} />
-                                </div>
+                                    <Conversation key={i} Conversation={c} currentUserId={userInfo?.otherDetails?._id} />
+                                </div>     
                             ))
+                      
                         }
                     </div>
                     <Link to="/profile">
-                    <div className='flex flex-col absolute bottom-6 cursor-pointer  sm:ml-2 ml-10'>
-                    <img src={userInfo?.otherDetails?.profilePicture} 
-                         className='w-[60px] h-[60px] rounded-[50%] bg-center bg-cover '/>
-                    <p className='text-white text-2xl font-semibold font-sans'>Profile</p>
-                    </div>
-                        
+                        <div className='flex w-[14%] justify-between absolute bottom-6 cursor-pointer  sm:ml-2 ml-10'>
+                            <div className='flex flex-col'>
+                                <img src={userInfo?.otherDetails?.profilePicture}
+                                    className='w-[60px] h-[60px] rounded-[50%] bg-center bg-cover ' />
+                                <p className='text-white text-2xl font-semibold font-sans'>Profile</p>
+                            </div>
+                            <div>
+                            <Link to='/adduser'><div className='w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-green-700'>
+                                    <FaPlus className='text-2xl font-bold '/>
+                               </div></Link>  
+                            </div>
+
+                        </div>
+
                     </Link>
                 </div>
                 {/* {right side chat body} */}

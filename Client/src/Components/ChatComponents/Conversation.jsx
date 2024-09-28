@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react'
 
 function Conversation({ Conversation, currentUserId }) {
     // store the conversation in useState
-    const [userChatData, setUserChatData] = useState('');
-
+    const [userChatData, setUserChatData] = useState([]);
     // get the conversation from server
     useEffect(() => {
         // find the other user id in the conversation members array from server
-        const userId = Conversation.members.find((id) => id !== currentUserId);
+        const userId = Conversation.members.filter((id) => id !== currentUserId);
         const getChatData = async () => {
         try {
             const res = await axios.get(`/user/chat/${userId}`) // get other user in members array 
@@ -18,9 +17,8 @@ function Conversation({ Conversation, currentUserId }) {
         }
     }
     getChatData();
-    }, [])
-
-
+    }, [Conversation.members, currentUserId])
+    console.log(userChatData)
     return (
         <>
             <div className='flex sm:flex-row flex-col  items-center sm:gap-x-4 gap-y-2 pt-4 hover:bg-[#545454] pb-4 sm:pl-4 pl-2 sm:mr-7 mr-1 rounded-xl cursor-pointer'>

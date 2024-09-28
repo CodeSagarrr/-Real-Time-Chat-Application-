@@ -6,7 +6,7 @@ import { BsFillSendFill } from "react-icons/bs";
 import InputEmoji from 'react-input-emoji'
 
 function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
-  const [userChatData, setUserChatData] = useState('');
+  const [userChatData, setUserChatData] = useState([]);
   const [getMessages, setGetMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const scroll = useRef();
@@ -19,9 +19,8 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
   },[recievedMessage])
   // get the conversation from server
   useEffect(() => {
-    if (!chat) return;
     // find the other user id in the conversation members array from server
-    const userId = chat?.members?.find((id) => id !== currentUser);
+    const userId = chat?.members?.filter((id) => id !== currentUser);
     const getChatData = async () => {
       try {
         const res = await axios.get(`/user/chat/${userId}`) // get other user in members array 
@@ -35,7 +34,7 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
 
   // get message from  server and fetch data
   useEffect(() => {
-    if (!chat) return;
+
     const fetchMessage = async () => {
       try {
         const msgRes = await axios.get(`/user/chatuser/${chat?._id}`)

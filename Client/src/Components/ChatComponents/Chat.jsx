@@ -53,14 +53,13 @@ function Chat() {
             try {
                 const chatsRes = await axios.get(`/user/conversation/${userInfo.otherDetails?._id}`)
                 setChats(chatsRes.data);
-                console.log(chatsRes.data)
             } catch (error) {
                 console.log(error)
             }
         }
         getChats();
     }, [userInfo])
-console.log(chats)
+
 
     return (
         <>

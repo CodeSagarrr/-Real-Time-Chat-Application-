@@ -55,12 +55,12 @@ export const handleLogout = (req, res) => {
 
 // get user
 export const getUser = async (req, res) => {
-    const id = req.params.id;
+    const {id } = req.params;
     try {
       const user = await userModel.findById(id);
       if (user) {
-        const { password, ...otherDetails } = user._doc;
-        res.status(200).json(otherDetails);
+        const { ...otherDetails } = user._doc;
+        res.status(200).json(otherDetails );
       } else {
         res.status(404).json("No such User");
       }
@@ -87,7 +87,7 @@ export const newConversation = async(req,res)=>{
 export const getUserConversation = async(req,res)=>{
     const {userId } = req.params;
     try{
-        const userConversation = await ConversationsModel.find({ members: {$in: [userId]} });
+        const userConversation = await ConversationsModel.find({ members: {$all: [userId]} });
         res.status(200).json(userConversation)
     }catch(err){
         res.status(500).json({ msg: err.message });

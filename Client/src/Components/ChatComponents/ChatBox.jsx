@@ -20,10 +20,10 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
   // get the conversation from server
   useEffect(() => {
     // find the other user id in the conversation members array from server
-    const userId = chat?.members?.filter((id) => id !== currentUser);
+    const otherId = chat?.members?.filter((id) => id !== currentUser);
     const getChatData = async () => {
       try {
-        const res = await axios.get(`/user/chat/${userId}`) // get other user in members array 
+        const res = await axios.get(`/user/chat/${otherId}`) // get other user in members array 
         setUserChatData(res.data);
       } catch (error) {
         console.log(error.message);

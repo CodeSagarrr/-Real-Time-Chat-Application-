@@ -70,7 +70,7 @@ function Chat() {
                         type="text"
                         placeholder="Search Friends..."
                         className="input input-bordered input-primary w-full max-w-[90%] sm:ml-0 ml-2" />
-                    <div className='mt-4 overflow-y-scroll'>
+                    <div className='mt-4 '>
                         {
                             chats.map((c, i) => (
                                 <div key={i} onClick={() => setCurrentChat(c)}>

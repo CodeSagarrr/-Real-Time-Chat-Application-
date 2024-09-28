@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 const chatSchema = mongoose.Schema({
     sender:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'userModel',
         required: true,
     },
     text:{
@@ -13,7 +12,6 @@ const chatSchema = mongoose.Schema({
     },
     chatId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'userModel',
         required: true,
     },
     

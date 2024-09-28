@@ -1,5 +1,5 @@
 # 💫 About Me:
-Hi, I'm Sagar vishwakarma! I'm a passionate full-stack developer specializing in building modern web applications with a focus on both frontend and backend technologies. I love problem-solving and exploring new technologies, always aiming to improve and deliver impactful solutions.
+Hi, I'm Sagar vishwakarma! I'm a passionate full-stack developer specializing in building modern web applications with a focus on both frontend and backend technologies. I  exploring new technologies, always aiming to improve and deliver impactful solutions.
 
 💻 Tech Stack Frontend: React, HTML5, CSS3, Tailwind CSS, JavaScript (ES6+) Backend: Node.js, Express.js, MongoDB, REST APIs, WebSockets Version Control: Git, GitHub
 

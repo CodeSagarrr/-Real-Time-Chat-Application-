@@ -1,5 +1,7 @@
 import React, { useState , useContext} from 'react'
-import { UserContext } from '../Context/UserContext.jsx'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from '../../Context/UserContext'
 import Navbar from '../Navbar'
 import '../../App.css'
 import { BsChatFill } from "react-icons/bs";
@@ -14,18 +16,30 @@ const AddFriend = () => {
         setUserData({...userData,[e.target.name]:e.target.value})
     }
 
-    // const handleSubmit = async(e) =>{
-    //     e.preventDefault();
-    //     try {
-    //         const res = await axios.post(`/user/conversation/${userInfo?.otherDetails?._id}`)
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        if(!userData.username){
+            toast.error('Please enter username')
+            return;
+        }
+        try {
+            const res = await axios.post(`/user/conversation/${userInfo?.otherDetails?._id}` , userData);
+            if(res.data.msg.trim() === 'Friends are added successfully'){
+                toast.success(res.data.msg)
+                setUserData({username:''})
+            }else{
+                toast.error(res.data.msg)
+                console.log(res.data.msg)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
 
         <>
             {/* {left side all user} */}
+          
             <div className='flex relative'>
                 <div className=' sm:basis-[20%] basis-[24%] flex flex-col sm:pl-8  pl-0 pt-4 text-black  bg-[#242424] h-screen rounded-r-xl'>
                     <div>
@@ -46,8 +60,9 @@ const AddFriend = () => {
                                 <label htmlFor="username" className='text-white text-2xl font-semibold'>Username</label>
                                 <input type="text" name='username' id='username' placeholder='Enter Username' className=" w-[90%] py-3 px-4 mt-3 bg-white text-black rounded-lg" required  onChange={handleChange}/>
 
-                                <button className='btn btn-primary text-black w-[28%] mt-5 font-semibold text-[20px] ' >Add Friends</button>
+                                <button className='btn btn-primary text-black w-[28%] mt-5 font-semibold text-[20px] ' onClick={handleSubmit} >Add Friends</button>
                             </form>
+                            <ToastContainer/>
                         </div>
                     </div>
 

@@ -6,26 +6,16 @@
     <title>chat-app</title>
 </head>
 <body>
-    <h1>hello from chat-app hello</h1>
-    <input id="inp" type="text">
-    <button id="btn">send</button>
 
 
-    <script src="/socket.io/socket.io.js"></script>
+   <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="avatar" id="fileID">
+    <button>Send</button>
+   </form>
+
+
     <script>
-        const socket = io();
-        const inp = document.getElementById("inp");
-        const btn = document.getElementById("btn");
-
-        btn.addEventListener("click",(e)=>{
-            const inpVal = inp.value;
-            socket.emit("send",inpVal);
-            inp.value = "";
-        })
-
-        socket.on("recieve",(massege)=>{
-            document.body.innerHTML += `<p>${massege}</p>`;
-        })
+      
     </script>
 </body>
 </html>

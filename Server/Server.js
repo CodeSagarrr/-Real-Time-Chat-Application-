@@ -5,13 +5,15 @@ import bodyParser from 'body-parser';
 import { Server} from 'socket.io'
 import mongoConnect from './db/MongoDB.js';
 import path from 'path';
-import { handleRegister, handleLogin, handleLogout, getUser, getUserConversation, addUserChat, getUserChat , otherUserAdd } from './Controller/userController.js';
+import { handleRegister, handleLogin, handleLogout, getUser, getUserConversation, addUserChat, getUserChat , otherUserAdd , changeProfilePic } from './Controller/userController.js';
 import { changeUserProfile , getUserProfile} from './Controller/profileController.js'
 import { validateSchema, loginValidation } from './Validations/registerValidation.js';
 import checkUserToken from './Middelwere/checkUserToken.js';
 import validateUser from './Middelwere/checkValidation.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import cloudinary from 'cloudinary';
+import upload from './Multer/Multer.js'
 
 // server configuration
 dotenv.config();
@@ -26,6 +28,7 @@ const io = new Server(server,{
 });
 
 // config dependency
+cloudinary.v2;
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
@@ -34,10 +37,7 @@ mongoConnect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/chatDataBase');
 
 
 // EJS connetion
-app.use(express.static(path.resolve('./public')))
-app.get('/', (req, res) => {
-  res.sendFile("/public/index.html");
-})
+app.use('./upload',express.static('upload'))
 
 
 
@@ -52,10 +52,22 @@ app.route('/user/conversation/:userId').get(getUserConversation); // get user fr
 app.route('/user/chatuser').post(checkUserToken, addUserChat); // add user to chat user database 
 app.route('/user/chatuser/:chatId').get(getUserChat); // get user to chat user database
 app.route('/user/profile/:id').put(changeUserProfile); // change user profile 
-app.route('/user/profile/:id').get(getUserProfile) // get user profile
+app.route('/user/profile/:id').get(getUserProfile)
+app.route('/user/profilePic/:id').put(upload.single('profilePicture'),changeProfilePic)// get user profile
 app.get('/user/chat', checkUserToken, (req, res) => {
   res.json({ user: req.user, message: "Access granted to chat data" });
 }) // login user can access this routes data
+
+
+
+
+// cloudinary configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
 
 // socket connections
 

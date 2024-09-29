@@ -7,6 +7,7 @@ import '../App.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { BsChatFill } from "react-icons/bs";
+import { FaCheck } from "react-icons/fa6";
 
 
 function Userprofile() {
@@ -14,9 +15,33 @@ function Userprofile() {
   const [editProfile, setEditProfile] = useState(false);
   const [userData, setUserData] = useState({ username: '', bio: '' })
   const [updateUser, setUpdateUser] = useState([])
+  const [profilePic , setProfilePic] = useState(null)
 
 
+  const handleProfileChange = (e) =>{
+    setProfilePic(e.target.files[0])
+  }
 
+
+  const handlePicSubmit = async(e) =>{
+    e.preventDefault(); 
+    if (!profilePic) {
+      toast.error('Please select a picture before submitting');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('profilePicture', profilePic);
+    try {
+      const res = await axios.put(`/user/profilePic/${userInfo?.otherDetails?._id}`, formData, {
+        headers: { 'Content-Type':'multipart/form-data' }
+      });
+      toast.success(res.data.msg)
+      setProfilePic(null)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+console.log(profilePic)
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value })
   }
@@ -43,7 +68,6 @@ function Userprofile() {
       try {
         const res = await axios.get(`/user/profile/${userInfo?.otherDetails?._id}`)
         setUpdateUser(res.data);
-        console.log(res.data);
       } catch (error) {
         console.log(error.message);
       }
@@ -73,13 +97,16 @@ function Userprofile() {
             {/* {left photo} */}
             <div className='flex h-[86%]'>
               <div className='basis-[40%] mt-20 flex justify-center items-center flex-col flex-wrap  rounded-2xl ml-8 bg-[#242424] h-[80%] '>
-                <img src={updateUser?.profilePicture} className='w-[100px] h-[100px] rounded-[50%]   ' />
+                <img src={updateUser?.profilePicture} className='w-[100px] h-[100px] rounded-[50%]  ' />
+                
+                <form className='w-[52%] flex justify-center'>
+                <input type="file" accept='image/*' name='profilePicture' className="file-input w-full mt-4 max-w-[40%]" onChange={handleProfileChange}/>
+                <button className='btn mt-4 ml-4' onClick={handlePicSubmit}><FaCheck/></button>
+                </form>
+                
+                <p className='text-4xl font-bold text-white  mt-2'>{updateUser?.username}</p>
 
-                <input type="file" accept='image/*' className="file-input w-full mt-4 max-w-[40%]" />
-
-                <p className='text-4xl font-bold text-white  mt-4'>{updateUser?.username}</p>
-
-                <p className='text-2xl font-semibold text-white mt-8 ml-10 max-w-[60%]'>{updateUser?.bio}</p>
+                <p className='text-2xl font-semibold text-white mt-4 ml-6 max-w-[60%]'>{updateUser?.bio}</p>
 
               </div>
 

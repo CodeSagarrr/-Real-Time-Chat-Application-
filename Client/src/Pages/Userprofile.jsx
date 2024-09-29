@@ -41,7 +41,7 @@ function Userprofile() {
       console.log(error);
     }
   }
-console.log(profilePic)
+
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value })
   }

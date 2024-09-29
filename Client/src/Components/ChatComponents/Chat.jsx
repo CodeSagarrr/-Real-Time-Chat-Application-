@@ -16,13 +16,27 @@ function Chat() {
     const [currentChat, setCurrentChat] = useState(null);
     const [onlineUser, setOnlineUser] = useState([]);
     const [sendMessage, setSendMessage] = useState(null); // message send direct socket
-    const [recievedMessage, setRecievedMessage] = useState(null); // get message from other user connect socket
+    const [recievedMessage, setRecievedMessage] = useState(null);
+    const [user , setUser] = useState([]) // get message from other user connect socket
     const socket = useRef()
 
     // protect user rotes
     useEffect(() => {
         getData();
     }, [])
+// get user data
+    useEffect(()=>{
+        const getUser = async() =>{
+            try {
+                const response = await axios.get(`/user/chat/${userInfo.otherDetails?._id}`)
+                setUser(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getUser();
+    },[userInfo])
     // send data to socket server 
     useEffect(() => {
         if (sendMessage !== null) {
@@ -84,7 +98,7 @@ function Chat() {
                     <Link to="/profile">
                         <div className='flex w-[14%] justify-between absolute bottom-6 cursor-pointer  sm:ml-2 ml-10'>
                             <div className='flex flex-col'>
-                                <img src={userInfo?.otherDetails?.profilePicture}
+                                <img src={user.profilePicture}
                                     className='w-[60px] h-[60px] rounded-[50%] bg-center bg-cover mb-2 ' />
                                 <p className='text-white text-2xl font-semibold font-sans'>Profile</p>
                             </div>

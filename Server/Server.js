@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import { Server} from 'socket.io'
 import mongoConnect from './db/MongoDB.js';
 import path from 'path';
-import { handleRegister, handleLogin, handleLogout, getUser, newConversation, getUserConversation, addUserChat, getUserChat } from './Controller/userController.js';
+import { handleRegister, handleLogin, handleLogout, getUser, getUserConversation, addUserChat, getUserChat , otherUserAdd } from './Controller/userController.js';
 import { changeUserProfile , getUserProfile} from './Controller/profileController.js'
 import { validateSchema, loginValidation } from './Validations/registerValidation.js';
 import checkUserToken from './Middelwere/checkUserToken.js';
@@ -47,7 +47,7 @@ app.route('/user/register').post(validateUser(validateSchema), handleRegister); 
 app.route('/user/login').post(validateUser(loginValidation), handleLogin); // login routes
 app.route('/user/logout').get(handleLogout) // logout routes
 app.route('/user/chat/:id').get(getUser); // get user from userModel database
-app.route('/user/conversation').post(newConversation); // add user converation in conversation database
+app.route('/user/conversation/:currentUser').post(otherUserAdd) // add user in conversation database
 app.route('/user/conversation/:userId').get(getUserConversation); // get user from conversation database
 app.route('/user/chatuser').post(checkUserToken, addUserChat); // add user to chat user database 
 app.route('/user/chatuser/:chatId').get(getUserChat); // get user to chat user database

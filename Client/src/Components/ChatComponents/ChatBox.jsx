@@ -65,8 +65,8 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
       const newMsg = {
         sender: currentUser,
         text: newMessage,
-        createdAt: new Date().toISOString(), // Add the current timestamp
         chatId: chat._id,
+        createdAt: new Date().toLocaleDateString(),  // Add the current timestamp
       };
       setGetMessages([...getMessages, newMsg]);
       setNewMessage("")

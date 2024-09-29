@@ -71,18 +71,28 @@ export const getUser = async (req, res) => {
 
 
 // add conersation of user
-export const newConversation = async(req,res)=>{
-    const {senderId ,chatId } = req.body;
-    try{
-        const userConversation = new ConversationsModel({
-            members: [senderId, chatId],
-        });
-        await userConversation.save();
-        res.status(200).json(userConversation)
-    }catch(err){
-        res.status(500).json({ msg: err.message });
+export const otherUserAdd = async(req,res) =>{
+    const { currentUser } = req.params;
+    const{ username } = req.body;
+    try {
+        const otherUser = await userModel.findOne({username:username});
+        if (otherUser) {
+            console.log(otherUser._id)
+            console.log(currentUser)
+            const conversation = await ConversationsModel.create(
+                {
+                    members: [currentUser, otherUser._id.toString()]
+                }
+            );
+            res.status(200).json({msg:'user are added successfully' , conversation});
+        }else{
+            res.status(404).json('User not regiter');
+        }
+        
+    } catch (error) {
+        console.log(error)
     }
-}
+};
 //get userConversation
 export const getUserConversation = async(req,res)=>{
     const {userId } = req.params;
@@ -120,3 +130,5 @@ export const getUserChat = async(req,res)=>{
         res.status(500).json(error.message);
     }
 };
+
+

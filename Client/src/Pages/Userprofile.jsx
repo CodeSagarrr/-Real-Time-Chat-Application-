@@ -59,10 +59,10 @@ function Userprofile() {
       <div>
         <div className='flex Gradient'>
           <div className=' sm:basis-[20%] basis-[24%] flex flex-col sm:pl-8  pl-0 pt-10 text-black  bg-[#242424] h-screen rounded-r-xl'>
-            <h1  className='text-4xl font-bold text-white '>Profile</h1>
+            <h1 className='text-4xl font-bold text-white '>Profile</h1>
             <Link to="/">
-              <button className="btn  text-white absolute top-[40%] left-[6%] "><BsChatFill />
-               Chat
+              <button className="btn text-2xl w-[9%] h-[8%] text-white absolute top-[40%] left-[5%] "><BsChatFill />
+                Chat
               </button>
             </Link>
           </div>

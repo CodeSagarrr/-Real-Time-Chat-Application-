@@ -75,22 +75,25 @@ function Chat() {
                             chats.map((c, i) => (
                                 <div key={i} onClick={() => setCurrentChat(c)}>
                                     <Conversation key={i} Conversation={c} currentUserId={userInfo?.otherDetails?._id} />
-                                </div>     
+                                </div>
                             ))
-                      
+
                         }
                     </div>
+                    {/* {profile section } */}
                     <Link to="/profile">
                         <div className='flex w-[14%] justify-between absolute bottom-6 cursor-pointer  sm:ml-2 ml-10'>
                             <div className='flex flex-col'>
                                 <img src={userInfo?.otherDetails?.profilePicture}
-                                    className='w-[60px] h-[60px] rounded-[50%] bg-center bg-cover ' />
+                                    className='w-[60px] h-[60px] rounded-[50%] bg-center bg-cover mb-2 ' />
                                 <p className='text-white text-2xl font-semibold font-sans'>Profile</p>
                             </div>
                             <div>
-                            <Link to='/adduser'><div className='w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-green-700'>
-                                    <FaPlus className='text-2xl font-bold '/>
-                               </div></Link>  
+                                {/* {add uuser} */}
+                                <Link to='/adduser'><div className='w-[60px] h-[60px] ml-14 mb-2 flex justify-center items-center rounded-[50%] bg-green-700'>
+                                    <FaPlus className='text-2xl font-bold ' />
+                                </div>
+                                    <p className='text-white ml-6  text-xl font-semibold font-sans'>Add Friends</p></Link>
                             </div>
 
                         </div>

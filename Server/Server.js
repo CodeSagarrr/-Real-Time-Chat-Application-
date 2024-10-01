@@ -4,8 +4,8 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import { Server} from 'socket.io'
 import mongoConnect from './db/MongoDB.js';
-import { handleRegister, handleLogin, handleLogout, getUser, getUserConversation, addUserChat, getUserChat , otherUserAdd , changeProfilePic } from './Controller/userController.js';
-import { changeUserProfile , getUserProfile} from './Controller/profileController.js'
+import { handleRegister, handleLogin, handleLogout, getUser, getUserConversation, addUserChat, getUserChat , otherUserAdd } from './Controller/userController.js';
+import { changeUserProfile , getUserProfile , changeProfilePic} from './Controller/profileController.js'
 import { validateSchema, loginValidation } from './Validations/registerValidation.js';
 import checkUserToken from './Middelwere/checkUserToken.js';
 import validateUser from './Middelwere/checkValidation.js';

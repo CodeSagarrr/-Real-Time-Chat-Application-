@@ -131,26 +131,3 @@ export const getUserChat = async (req, res) => {
     }
 };
 
-export const changeProfilePic = async (req, res) => {
-    const { id } = req.params;
-    const dpFilename = req.file.path; 
-    try {
-        const cloudImage = await cloudinary.uploader.upload(dpFilename, { resource_type: 'auto' });
-
-        if (!cloudImage) {
-            return res.status(400).json({ msg: 'Failed to upload profile picture' });
-        }
-        const updatedUser = await userModel.findByIdAndUpdate(
-            id,
-            { profilePicture: cloudImage.url },
-            { new: true }
-        );
-        if (!updatedUser) {
-            return res.status(404).json({ msg: 'User not found' });
-        }
-        res.status(200).json({ msg: 'Profile Pic Updated', user: updatedUser });
-
-    } catch (error) {
-        res.status(500).json({ msg: 'Server Error', error: error.message });
-    }
-};

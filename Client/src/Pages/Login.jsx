@@ -47,7 +47,7 @@ function Login() {
                         <label className='font-bold text-xl mt-5 mb-1 text-white'>Password</label>
                         <input className='w-[90%] h-[10%]  rounded-md p-2  outline-none' type='password' placeholder='Password' name='password' required onChange={handleChange} />
 
-                        <span className='text-white font-bold text-xl my-2 '>Forgot Password ?</span>
+                        <span className='text-white font-bold text-xl my-2 cursor-pointer'>Forgot Password ?</span>
                         <button className='w-[90%] h-[10%] rounded-md mt-2 bg-[#277b18] text-white  outline-none' required onClick={handleSubmit}>Login</button>
                     </form>
                     <ToastContainer />

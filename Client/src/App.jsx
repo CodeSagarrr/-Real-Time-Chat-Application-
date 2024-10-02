@@ -12,11 +12,11 @@ function App() {
     <>
     <Router>
         <Routes>
-          <Route  path="/" Component={<Chat/>} />
-          <Route  path="/profile" Component={<><Userprofile/></>} />
-          <Route  path="/register" Component={<Register/>} />
-          <Route  path="/login" Component={<Login/>} />
-          <Route  path="/adduser" Component={<AddFriend/>} />
+          <Route exact path="/" Component={<Chat/>} />
+          <Route exact path="/profile" Component={<><Userprofile/></>} />
+          <Route exact path="/register" Component={<Register/>} />
+          <Route exact path="/login" Component={<Login/>} />
+          <Route exact path="/adduser" Component={<AddFriend/>} />
         </Routes>
     </Router>
      </>

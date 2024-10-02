@@ -7,7 +7,7 @@ dotenv.config()
 export default defineConfig({
   server: {
     proxy: {
-      '/user': process.env.URL,
+      '/user': process.env.URL || 'http://localhost:8080',
     },
   },
   plugins: [react()],

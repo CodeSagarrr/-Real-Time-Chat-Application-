@@ -10,5 +10,8 @@ export default defineConfig({
       '/user': process.env.URL || 'http://localhost:8080',
     },
   },
+  build: {
+    minify: false,
+  },
   plugins: [react()],
 })

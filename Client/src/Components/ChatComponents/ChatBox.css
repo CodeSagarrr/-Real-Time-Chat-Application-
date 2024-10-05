@@ -24,3 +24,16 @@ align-self: flex-end;
 border-radius: 1rem 1rem 0 1rem;
 background: linear-gradient(98.63deg, #24e4f0 0%, #358ff9 100%);
 }
+
+@media screen  and (max-width: 410px) {
+  .chat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 70vh;
+    padding-top: 1rem;
+    padding-right: 0px;
+    overflow-y: scroll;
+  }
+  
+}

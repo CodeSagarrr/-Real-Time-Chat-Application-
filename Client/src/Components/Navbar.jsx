@@ -25,7 +25,7 @@ function Navbar() {
   return (
     <>
      <ToastContainer />
-       <div className='flex sm:w-full w-[94%]'>
+       <div className='flex sm:w-full sm:ml-2 ml-[3px] w-[94%]'>
         <div className='ml-10 mt-4 basis-[40%]'>
           <h1 className='text-3xl font-bold text-[#ffff]'>Chat</h1>
         </div>

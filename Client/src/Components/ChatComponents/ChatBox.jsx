@@ -106,18 +106,18 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
           </div>
      
 
-          <div className='absolute bottom-0 sm:w-[44vw] w-[59vw] mb-5 sm:ml-64 ml-4 '>
+          <div className='absolute bottom-0 sm:w-[62vw] w-[57vw] mb-5 sm:ml-12 ml-0 '>
             <InputEmoji
               value={newMessage}
               onChange={handleChange}
               placeholder="Type here ..." />
           </div>
 
-          <button className="btn absolute bottom-0 sm:right-[21rem] right-6 mb-6  " onClick={handleSendMessage}><BsFillSendFill className='text-[22px]' /></button>
+          <button className="btn absolute bottom-0 sm:right-[5rem] right-6 mb-6  " onClick={handleSendMessage}><BsFillSendFill className='text-[22px]' /></button>
 
         </div> </>
         :
-        <div className='flex justify-center items-center  h-[92vh] w-[76vw] sm:mt-[10px] mt-[10px] mx-10 text-white bg-[#434343] rounded-lg'>
+        <div className='flex justify-center items-center  h-[92vh] w-[76vw] sm:mt-[10px] mt-[10px] sm:mx-10 mx-2 text-white bg-[#434343] rounded-lg'>
           <p className='font-bold text-xl text-center'>Select a conversation to start chatting.</p>
         </div> }
     </>
@@ -125,16 +125,3 @@ function ChatBox({ chat, currentUser , setSendMessage , recievedMessage }) {
 }
 
 export default ChatBox
-
-// {
-//   getMessages.map((msg, index) => (
-//     <div className={msg.sender == currentUser ? 'message own' : 'message other'}  key={index}>
-//       <>
-//         <p className='font-semibold '>{msg.text}</p>
-//         <p className='text-black text-[12px]'>{format(msg.createdAt)}</p>
-//       </>
-//     </div>
-
-//   ))
-  
-// } 

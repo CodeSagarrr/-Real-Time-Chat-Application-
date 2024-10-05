@@ -30,7 +30,6 @@ function Chat() {
             try {
                 const response = await axios.get(`/user/chat/${userInfo.otherDetails?._id}`)
                 setUser(response.data);
-                console.log(response.data);
             } catch (error) {
                 console.log(error)
             }
@@ -79,7 +78,7 @@ function Chat() {
         <>
             {/* {left side all user} */}
             <div className='flex relative'>
-                <div className=' sm:basis-[20%] basis-[24%] flex flex-col sm:pl-8  pl-0 pt-10 text-black  bg-[#242424] h-screen rounded-r-xl'>
+                <div className=' sm:basis-[40%] basis-[24%] flex flex-col sm:pl-4  pl-0 pt-6 text-black  bg-[#242424] h-screen rounded-r-xl'>
                     <input
                         type="text"
                         placeholder="Search Friends..."
@@ -96,18 +95,18 @@ function Chat() {
                     </div>
                     {/* {profile section } */}
                     <Link to="/profile">
-                        <div className='flex w-[14%] justify-between absolute bottom-6 cursor-pointer  sm:ml-2 ml-10'>
+                        <div className='flex sm:flex-row flex-col w-[14%] justify-between absolute bottom-6 cursor-pointer  sm:ml-2 ml-2'>
                             <div className='flex flex-col'>
                                 <img src={user.profilePicture}
                                     className='w-[60px] h-[60px] rounded-[50%] bg-center bg-cover mb-2 ' />
-                                <p className='text-white text-2xl font-semibold font-sans'>Profile</p>
+                                <p className='text-white text-2xl font-semibold font-sans sm:mb-0 mb-2'>Profile</p>
                             </div>
                             <div>
                                 {/* {add uuser} */}
-                                <Link to='/adduser'><div className='w-[60px] h-[60px] ml-14 mb-2 flex justify-center items-center rounded-[50%] bg-green-700'>
+                                <Link to='/adduser'><div className='w-[51px] h-[52px] ml-1 mb-2 flex justify-center items-center rounded-[50%] bg-green-700'>
                                     <FaPlus className='text-2xl font-bold ' />
                                 </div>
-                                    <p className='text-white ml-6  text-xl font-semibold font-sans'>Add Friends</p></Link>
+                                    <p className='text-white ml-2  mb-2  text-2xl font-semibold font-sans'>Add</p></Link>
                             </div>
 
                         </div>
